@@ -199,6 +199,22 @@ Output: `outputs/demosaic_denoise_breakdown/<dataset>/<regime>/*.png`
 see "Does chroma noise reduction help?" above; most of its gap from the
 Malvar-alone column traces to the rewritten `bcc` stage, not denoising.)*
 
+### Qualitative: the same image (Kodak `kodim01`) across all three regimes
+
+Each grid is one 6-panel comparison — row 1: bilinear | Malvar | JointISPNet
+(demosaic only), row 2: traditional ISP (full pipeline) | JointISPNet |
+ground truth (end-to-end). Same source image, same seed, only the
+simulated noise level changes between grids.
+
+**Low ISO**
+![kodim01, low ISO](../outputs/demosaic_denoise_breakdown/kodak/low_iso/kodim01.png)
+
+**Mid ISO**
+![kodim01, mid ISO](../outputs/demosaic_denoise_breakdown/kodak/mid_iso/kodim01.png)
+
+**High ISO**
+![kodim01, high ISO](../outputs/demosaic_denoise_breakdown/kodak/high_iso/kodim01.png)
+
 Three findings, each visible only because demosaic and end-to-end are
 compared at every regime instead of one fixed regime each:
 
