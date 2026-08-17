@@ -1,14 +1,9 @@
 # neuralisp
 
-A from-scratch neural ISP: joint demosaic + denoise on synthetic Bayer RAW,
-trained and evaluated entirely on open-source data. Built to answer a
-concrete question — "how would you actually build one of these, and how far
-can you get solo" — with working code, not just a diagram.
+A neural ISP built from scratch: joint demosaic and denoise on synthetic
+Bayer RAW, trained and evaluated entirely on open-source data.
 
-## Why this scope (demosaic+denoise only, not the whole ISP)
-
-Production neural-ISP systems split into a part that's worth learning and a
-part that isn't:
+## Scope: demosaic+denoise only
 
 ```
 RAW (post-BLC/LSC/defect-correction, classical)
@@ -23,87 +18,71 @@ linear RGB, camera-native, pre-WB
 WB -> CCM -> tone curve -> LTM -> sharpen   (classical, tunable)
 ```
 
-**Demosaic and denoise are learned, jointly, as one network.** They're
-estimation problems on the same underlying signal: demosaic-first correlates
-noise spatially/across channels before the denoiser sees it; denoise-first
-destroys the high-frequency Bayer structure demosaic needs. A single network
-that goes straight from packed Bayer to linear RGB avoids both failure
-modes and consistently beats the classical cascade in the literature.
+Demosaic and denoise are learned together, as one network, because they
+act on the same signal. Demosaic-first correlates noise across channels
+before the denoiser sees it. Denoise-first destroys the Bayer structure
+demosaic needs. One network from packed Bayer to linear RGB avoids both
+and beats the classical cascade in the literature.
 
-**WB, color correction, and tone mapping stay classical.** Those are product
-knobs — "5% warmer," "less shadow contrast" — that need to change on a
-product manager's schedule, not a retraining schedule. Baking them into
-network weights means every tuning request becomes a data-collection +
-retrain + full-regression cycle. Keeping them as parametric blocks fed by
-(optionally learned) parameter *estimates* keeps them instantly tunable.
+White balance, color correction, and tone mapping stay classical. These
+are product knobs that change often, and baking them into network weights
+would turn every tuning request into a retrain. Kept as parametric
+blocks, they stay instantly tunable.
 
-This mirrors why a neural-ISP company still runs an optics team even though
-they don't design lenses: the network is trained to invert a specific,
-measured optical/sensor degradation. The forward model in
-[`neuralisp/data/degradation.py`](neuralisp/data/degradation.py) — noise
-calibration, color matrices, white balance — is the thing that determines
-whether synthetic training data is realistic. Get the forward model wrong
-and the network learns to invert the wrong thing.
+The forward model in
+[`neuralisp/data/degradation.py`](neuralisp/data/degradation.py) (noise
+calibration, color matrices, white balance) determines whether the
+synthetic training data is realistic.
 
 ## Architecture
 
-`neuralisp/models/unet.py` — `JointISPNet`:
+`neuralisp/models/unet.py`, `JointISPNet`:
 
-- **Input**: packed RGGB Bayer (4ch, at H/2 x W/2) concatenated with a
-  broadcast noise-level map (2ch: shot and read noise params) — 6 channels
-  in. Conditioning on *known* noise parameters (derived from ISO/analog
-  gain, not estimated from the noisy image) lets one model cover the full
-  operating range instead of needing one model per ISO bucket.
-- **Body**: U-Net, strided-conv encoder / PixelShuffle decoder, residual
-  blocks at each scale, skip connections. Default: 4 levels, channel
-  multipliers (1,2,4,8) on a 32-channel base — ~8.6M params.
-- **Output**: the network predicts a *residual* on top of a cheap bilinear
-  demosaic baseline, PixelShuffled back up to full resolution (H, W, 3).
-  Predicting a residual instead of the raw image stabilizes training and
-  gives a sane fallback (the baseline alone) if the residual path misbehaves.
-- **Loss**: L1 (dominant) + MS-SSIM, computed in a gamma-compressed space —
-  linear-space losses over-weight bright regions relative to how error is
-  actually perceived. See `neuralisp/losses.py`.
+- **Input**: packed RGGB Bayer (4ch) plus a broadcast noise-level map
+  (2ch: shot and read noise, from ISO/gain, not estimated). 6 channels
+  total.
+- **Body**: U-Net. Strided-conv encoder, PixelShuffle decoder, residual
+  blocks, skip connections. 4 levels, channel multipliers (1,2,4,8),
+  32-channel base, ~8.6M params.
+- **Output**: a residual on top of a bilinear demosaic baseline,
+  PixelShuffled to full resolution. Stabilizes training and gives a safe
+  fallback.
+- **Loss**: L1 (dominant) plus MS-SSIM, in gamma-compressed space (linear
+  space over-weights bright regions). See `neuralisp/losses.py`.
 
-## The forward degradation model (why there's no real paired dataset here)
+## Forward degradation model
 
-Real (RAW, clean-ground-truth) pairs at scale are scarce and heavy
-(SIDD, DND, HDR+ are tens-to-hundreds of GB with registration/licensing
-overhead). Instead this project uses **unprocessing** (Brooks et al., CVPR
-2019): take any clean, well-exposed sRGB photo and invert the classical ISP
-steps to land back in a plausible sensor-RAW domain:
+Real RAW pairs at scale are scarce (SIDD, DND, HDR+ run tens to hundreds
+of GB, with licensing overhead). This project uses unprocessing (Brooks
+et al., CVPR 2019) instead: invert a clean sRGB photo back to a plausible
+RAW.
 
 ```
 clean sRGB -> inverse gamma -> inverse CCM -> inverse WB -> mosaic (RGGB) -> + calibrated noise
 ```
 
-Noise is signal-dependent: `var(I) = shot_a * I + read_b`, with `(shot_a,
-read_b)` sampled from the log-linear relationship calibrated in Foi et al. /
-Brooks et al., spanning roughly low-ISO to high-ISO operating points. CCM
-and white-balance gains are randomized per training sample (sampled from a
-small bank of real-ish camera color matrices) so the network doesn't overfit
-to one sensor's color response.
+Noise is signal-dependent: `var(I) = shot_a * I + read_b`, sampled from
+the log-linear relationship calibrated in Foi et al. / Brooks et al. CCM
+and white-balance gains are randomized per sample from a small bank of
+camera matrices, so the network doesn't overfit to one sensor.
 
-This is applied **on-the-fly, batched, on GPU**, inside the training loop —
-not baked to disk — so every epoch sees a fresh noise/color realization of
-the same clean image. See `neuralisp/data/degradation.py`; round-trip and
-shape correctness are covered in `tests/test_degradation.py`.
-
-The network's supervision target is the camera-native linear RGB *before*
-WB/CCM are re-applied, matching the pipeline boundary above.
+This runs on-the-fly, batched, on GPU, inside the training loop, so every
+epoch sees a fresh realization. See `neuralisp/data/degradation.py`;
+round-trip and shape correctness are covered in
+`tests/test_degradation.py`. Supervision target: camera-native linear RGB,
+before WB/CCM.
 
 ## Data
 
-All open-source, fetched by [`scripts/download_data.py`](scripts/download_data.py):
+Fetched by [`scripts/download_data.py`](scripts/download_data.py):
 
 | Split | Source | Count | Role |
 |---|---|---|---|
-| train | [BSDS500](https://github.com/BIDS/BSDS500) | 502 images | patch source for training (random 128x128 crops, 8/image/epoch) |
-| test | [Kodak](https://r0k.us/graphics/kodak/) | 24 images | primary held-out eval (standard demosaicing benchmark) |
-| test | [CBSD68](https://github.com/clausmichele/CBSD68-dataset) | 68 images | secondary held-out eval (standard denoising benchmark) |
+| train | [BSDS500](https://github.com/BIDS/BSDS500) | 502 images | patch source (random 128x128 crops, 8/image/epoch) |
+| test | [Kodak](https://r0k.us/graphics/kodak/) | 24 images | primary held-out eval |
+| test | [CBSD68](https://github.com/clausmichele/CBSD68-dataset) | 68 images | secondary held-out eval |
 
-Re-run `python scripts/download_data.py` any time; it's idempotent (skips
-what's already present).
+Re-run anytime; idempotent.
 
 ## Project layout
 
@@ -123,9 +102,9 @@ scripts/
   download_data.py     fetch Kodak / CBSD68 / BSDS500
 tests/                  unit tests for degradation math, model shapes, losses
 data_raw/               downloaded datasets (gitignored)
-checkpoints/<run>/      best.pt, latest.pt (gitignored)
-runs/<run>/             TensorBoard logs (gitignored)
-outputs/<run>/          qualitative PNG samples during training (gitignored)
+checkpoints/<run>/      best.pt, latest.pt
+runs/<run>/             TensorBoard logs
+outputs/<run>/          qualitative PNG samples
 ```
 
 ## Usage
@@ -139,7 +118,7 @@ python scripts\download_data.py
 # train
 venv\Scripts\python -m neuralisp.train --epochs 100 --batch-size 16 --patch-size 128
 
-# evaluate a checkpoint across low/mid/high-ISO regimes, on Kodak and CBSD68
+# evaluate a checkpoint, low/mid/high-ISO, on Kodak and CBSD68
 venv\Scripts\python -m neuralisp.evaluate --checkpoint checkpoints\<run>\best.pt --dataset data_raw\test\kodak
 venv\Scripts\python -m neuralisp.evaluate --checkpoint checkpoints\<run>\best.pt --dataset data_raw\test\cbsd68
 
@@ -148,14 +127,12 @@ venv\Scripts\tensorboard --logdir runs
 ```
 
 `train.py --max-steps N --limit-val M` runs a fast smoke test instead of a
-full run — useful for verifying a change didn't break anything before
-committing GPU time.
+full run.
 
 ## Results
 
-100 epochs, `JointISPNet` (8.6M params, base_channels=32), trained on BSDS500
-patches, evaluated on two held-out sets it never saw during training, across
-three simulated noise regimes (see `NOISE_REGIMES` in `evaluate.py`):
+100 epochs, `JointISPNet` (8.6M params, base_channels=32), evaluated on
+two held-out sets across three simulated noise regimes:
 
 | Dataset | Regime | Net PSNR | Net SSIM | Bilinear PSNR | Bilinear SSIM | Δ PSNR |
 |---|---|---|---|---|---|---|
@@ -166,104 +143,207 @@ three simulated noise regimes (see `NOISE_REGIMES` in `evaluate.py`):
 | CBSD68 (68) | mid ISO | 37.96 dB | 0.9692 | 31.37 dB | 0.8676 | +6.59 dB |
 | CBSD68 (68) | high ISO | 28.97 dB | 0.7891 | 22.92 dB | 0.4755 | +6.06 dB |
 
-The gap over bilinear demosaic grows sharply at high simulated ISO (SSIM
-0.79 vs. 0.45-0.48) — qualitatively, the bilinear baseline is heavily
-colored-noise-corrupted at that regime while the network output stays
-close to ground truth (see `outputs/eval/*/high_iso/*.png`). Performance is
-consistent between Kodak and CBSD68 despite CBSD68 being entirely unseen,
-which is the generalization check that matters here: nothing about CBSD68
-was used for training or hyperparameter selection.
+The gap grows sharply at high ISO (SSIM 0.79 vs. 0.45-0.48): bilinear is
+heavily noise-corrupted there, the network stays close to ground truth.
+Performance is consistent between Kodak and CBSD68, the generalization
+check that matters since CBSD68 was never used for training or tuning.
 
-Full per-regime numbers: `outputs/eval/<dataset>/results.json`. Qualitative
-triplets (bilinear | prediction | ground truth, rendered to sRGB):
-`outputs/eval/<dataset>/<regime>/*.png`.
+Full numbers: `outputs/eval/<dataset>/results.json`. Qualitative triplets
+(bilinear, prediction, ground truth): `outputs/eval/<dataset>/<regime>/*.png`.
 
-**Caveat, stated plainly**: PSNR/SSIM on synthetic data validate that the
-network correctly inverts *this project's* forward model — they are not a
-substitute for real-sensor validation, dead-leaves/acutance texture metrics,
-or a human A/B panel, all of which are necessary before anything like this
-ships. See "What's missing for production" below.
+**Caveat**: PSNR/SSIM here only validate that the network inverts this
+project's own forward model. Not a substitute for real-sensor validation,
+texture metrics, or a human panel. See "What's missing for production."
 
 ## The retraining problem
 
-The biggest operational difference from a classical, knob-tuned ISP: a
-classical ISP has parameters you can nudge and rebuild in an afternoon; this
-network has weights, and a bad result on some scene means **change the
-data, retrain, and re-validate everything** — fixing skin tone can regress
-foliage. This project's design choices exist specifically to blunt that:
+A classical ISP has parameters you nudge and rebuild in an afternoon. This
+network has weights: a bad result means change the data, retrain,
+re-validate everything. Design choices here exist to blunt that:
 
-- **Noise-level conditioning** (the 2-channel noise map) means one model
-  covers an ISO range instead of needing per-ISO models, so most "it's
-  wrong at high ISO" complaints are a data-coverage problem, not an
-  architecture problem.
-- **WB/CCM/tone kept classical** means color and contrast tuning requests
-  never touch the network at all.
-- **A fixed, versioned held-out set** (Kodak + CBSD68, evaluated identically
-  every run via `evaluate.py`) is the minimum viable regression harness —
-  every checkpoint gets the same numbers, so a "fix" that regresses another
-  scene class is visible immediately instead of surfacing after ship.
+- **Noise-level conditioning** covers an ISO range with one model, so most
+  "wrong at high ISO" complaints are a data problem, not architecture.
+- **WB/CCM/tone kept classical** means color and contrast requests never
+  touch the network.
+- **A fixed, versioned held-out set** (Kodak + CBSD68, via `evaluate.py`)
+  is the minimum viable regression harness.
 
-In a real deployment, the missing piece this project doesn't attempt is the
-**data-centric loop**: triage a real failure -> capture/synthesize more of
-that failure class -> add to train set -> retrain -> re-run the regression
-set. That loop, not the architecture, is what production neural-ISP teams
-actually spend most of their time on.
+The missing piece for real deployment is the data-centric loop: triage a
+failure, capture more of that failure class, retrain, re-run the
+regression set. That loop, not the architecture, is what production teams
+spend most of their time on.
 
 ## What's missing for production
 
-This is a solo/portfolio-scoped system. Honest gaps between this and a
-shippable product:
+Solo/portfolio-scoped. Honest gaps:
 
-- **Real sensor data.** Everything here is synthetic (unprocessed sRGB).
-  A real deployment finetunes on real (noisy-RAW, clean-reference) pairs
-  from the target sensor — e.g. SIDD, or a captured burst-averaged set —
-  because no synthetic forward model perfectly matches a real sensor's
-  PRNU, defect pixels, or read-noise correlations.
+- **Real sensor data.** Everything here is synthetic. Real deployment
+  finetunes on real RAW pairs (e.g. SIDD) since no forward model matches a
+  sensor's PRNU, defect pixels, or read-noise exactly.
   [`neuralisp/data/datasets.py`](neuralisp/data/datasets.py) is structured
-  so a `RealPairedRawDataset` (reading real RAW via `rawpy`, already a
-  project dependency) can be dropped in alongside `PatchTrainDataset`
-  without touching the model or training loop.
-- **Lens-specific degradation.** No PSF/CA/flare modeling here — the
-  "optics team" role described above (field-varying MTF, per-unit
-  calibration bounds) isn't simulated. Adding a measured, field-varying
-  blur kernel to the forward model would be the direct next step and would
-  turn this into denoise+demosaic+deblur, still one joint network.
-- **Quantization / on-device deployment.** No INT8/QAT export or NPU op
-  coverage check. Restoration networks are unusually sensitive to
-  quantization because they operate on small residuals — production would
-  need per-channel quantization and QAT before targeting a phone NPU.
-- **Texture/acutance and perceptual eval.** Only PSNR/SSIM here. A real IQ
-  harness needs dead-leaves acutance (catches oversmoothing that PSNR
-  rewards), ISO 15739 visual noise, chart+scene SFR, and a blind A/B panel.
-- **Video temporal consistency.** Single-frame only; no temporal loss or
-  recurrent/burst input.
+  so a `RealPairedRawDataset` can drop in alongside `PatchTrainDataset`.
+- **Lens-specific degradation.** No PSF/CA/flare modeling. A measured
+  blur kernel would turn this into denoise+demosaic+deblur.
+- **Quantization / on-device deployment.** No INT8/QAT export. Restoration
+  networks are unusually sensitive to quantization since they operate on
+  small residuals.
+- **Texture/acutance and perceptual eval.** Only PSNR/SSIM here. A real
+  harness needs dead-leaves acutance, ISO 15739 visual noise, SFR, and a
+  blind panel.
+- **Video temporal consistency.** Single-frame only.
 
 ## Traditional ISP baseline
 
-`reference_isp/` runs a real classical ISP — a fork of
-[fast-openISP](https://github.com/QiuJueqin/fast-openISP) (MIT licensed)
-with two local additions, `lsc` (lens shading correction) and `nfc`
-(chroma noise reduction), plus a rewritten `bcc`/`hsc`: DPC/BLC/**LSC**/
-AAF/AWB/CNF/Malvar-demosaic/CCM/gamma/CSC/NLM/**NFC**/BNF/CEH/EEH/FCS/HSC/
-BCC — on the exact same synthetic test inputs, for a fair 4-way comparison
-against bilinear and `JointISPNet`. Headline result: at high simulated ISO
-the traditional pipeline's real denoise stages (NLM/BNF/NFC) meaningfully
-beat plain bilinear, but `JointISPNet` still wins by a wide margin (22.1dB
-vs 18.9dB PSNR on Kodak) because NLM/BNF only denoise luma and `nfc`'s
-isolated contribution turns out to be small (+0.02 to +0.10dB — see
-below), leaving visible chroma noise that the joint RGB network doesn't.
-See `reference_isp/README.md` for the full numbers, an ablation isolating
-`nfc`'s true effect from the larger `bcc` rewrite it's easy to confuse it
-with, and a genuinely counterintuitive finding at low ISO (the traditional
-pipeline scores *below* bilinear there — its own gamma curve and
-sharpening/contrast stages, not demosaic quality, turn out to dominate the
-error at low noise). `reference_isp/compare_demosaic_denoise.py` isolates
-demosaic-only from end-to-end at every noise level (bilinear vs. Malvar vs.
-`JointISPNet` demosaic; traditional-ISP vs. `JointISPNet` end-to-end),
-confirming Malvar beats bilinear at low ISO once it's not confounded by
-the full pipeline's tone curve — and reveals that this flips at high ISO,
-where Malvar's edge-sharpening kernel amplifies noise more than bilinear's
-plain averaging does.
+`reference_isp/` runs a real classical ISP on the same synthetic test
+inputs as `neuralisp.evaluate`, so `JointISPNet` gets compared against a
+real pipeline, not just the bilinear strawman above.
+
+**What's here:**
+
+- `fast-openISP/`: a fork of
+  [QiuJueqin/fast-openISP](https://github.com/QiuJueqin/fast-openISP) (MIT
+  licensed, forked from commit `26fd824`, 2023-06-21). Adds `lsc` (lens
+  shading correction) and `nfc` (chroma noise reduction, a
+  local-neighborhood outlier filter on Cb/Cr), neither present upstream.
+  Rewrote `bcc` and `hsc` (min-max stretch contrast, floating-point
+  hue/saturation, replacing the original fixed-point x256 gains).
+  Pipeline: DPC, BLC, LSC, AAF, AWB, CNF, CFA (Malvar), CCM, GAC (gamma),
+  CSC, NLM, NFC, BNF, CEH, EEH, FCS, HSC, BCC. Full history:
+  [yumiao0557/fast-openISP](https://github.com/yumiao0557/fast-openISP).
+- `compare_traditional_isp.py`: reuses this project's own `degrade()` for
+  a noisy Bayer mosaic, runs it through fast-openISP with a matched
+  config, and produces a 4-way comparison against bilinear, `JointISPNet`,
+  and ground truth.
+- `compare_demosaic_denoise.py`: splits that comparison into demosaic
+  alone and denoise alone, since the full pipeline confounds both.
+
+**Matched conditions:** fast-openISP gets the same per-image white-balance
+gains and CCM that `degrade()` sampled, so differences reflect
+demosaic/denoise quality, not color mismatch. DPC and LSC are disabled:
+this project's noise model has no dead pixels or vignetting, so both
+would add an effect rather than correct a real defect. NFC stays enabled,
+since chroma noise is actually simulated here.
+
+```powershell
+venv\Scripts\python reference_isp\compare_traditional_isp.py --checkpoint checkpoints\joint_isp_v1\best.pt --dataset data_raw\test\kodak
+venv\Scripts\python reference_isp\compare_traditional_isp.py --checkpoint checkpoints\joint_isp_v1\best.pt --dataset data_raw\test\cbsd68
+venv\Scripts\python reference_isp\compare_demosaic_denoise.py --checkpoint checkpoints\joint_isp_v1\best.pt --dataset data_raw\test\kodak
+venv\Scripts\python reference_isp\compare_demosaic_denoise.py --checkpoint checkpoints\joint_isp_v1\best.pt --dataset data_raw\test\cbsd68
+```
+
+**Results (24 Kodak, 68 CBSD68, matched conditions):**
+
+| Dataset | Regime | Bilinear | Malvar (openISP) | Traditional ISP (full) | JointISPNet |
+|---|---|---|---|---|---|
+| Kodak | low ISO | 25.18 dB / 0.748 | **26.05 dB / 0.845** | 23.22 dB / 0.698 | **35.62 dB / 0.967** |
+| Kodak | mid ISO | 22.97 dB / 0.539 | 23.19 dB / 0.633 | 23.09 dB / 0.644 | **32.17 dB / 0.911** |
+| Kodak | high ISO | **13.97 dB** / 0.143 | 13.70 dB / 0.197 | 18.90 dB / 0.333 | **22.11 dB / 0.491** |
+| CBSD68 | low ISO | 24.19 dB / 0.738 | **25.12 dB / 0.844** | 20.98 dB / 0.674 | **35.25 dB / 0.973** |
+| CBSD68 | mid ISO | 22.28 dB / 0.553 | 22.61 dB / 0.658 | 20.91 dB / 0.629 | **31.84 dB / 0.922** |
+| CBSD68 | high ISO | **14.22 dB** / 0.169 | 14.12 dB / 0.237 | 18.63 dB / 0.367 | **22.05 dB / 0.533** |
+
+Traditional ISP runs with `nfc` enabled throughout (see the ablation
+below for its isolated effect).
+
+At low and mid ISO the traditional pipeline scores below plain bilinear,
+despite using Malvar demosaic and real denoise stages. At low noise,
+demosaic/denoise error is tiny for both, so the dominant error source is
+fast-openISP's own tone response: GAC uses a fixed gamma (0.42) instead of
+an exact sRGB curve, EEH and CEH push pixel values away from a flat
+rendering, and `nfc` smooths chroma detail that isn't yet noise. These are
+standard ISP behaviors that often look better to a human but cost
+PSNR/SSIM against a literal ground truth. Only at high ISO does the
+pipeline pull ahead of bilinear.
+
+At high ISO, `JointISPNet` still wins by a wide margin (22.1dB vs 18.9dB,
+SSIM 0.49 vs 0.33). NLM and BNF only denoise luma, and `nfc`'s gain is
+modest, so chroma noise still passes through more than in the joint
+network's output.
+
+**Does chroma noise reduction help?** `nfc` compares each Cb/Cr pixel to
+its 8-neighbor mean/std and blends toward the mean past `thresh` standard
+deviations (`alpha=0.3`, `thresh=2.5`). Isolating its effect means holding
+`bcc`/`hsc` fixed and only toggling `nfc`:
+
+| Dataset | Regime | nfc off | nfc on | Δ |
+|---|---|---|---|---|
+| Kodak | low ISO | 23.20 dB / 0.6972 | 23.22 dB / 0.698 | +0.02 dB |
+| Kodak | mid ISO | 23.07 dB / 0.6415 | 23.09 dB / 0.644 | +0.02 dB |
+| Kodak | high ISO | 18.80 dB / 0.3273 | 18.90 dB / 0.333 | +0.10 dB |
+| CBSD68 | low ISO | 20.96 dB / 0.6733 | 20.98 dB / 0.674 | +0.02 dB |
+| CBSD68 | mid ISO | 20.90 dB / 0.6275 | 20.91 dB / 0.629 | +0.01 dB |
+| CBSD68 | high ISO | 18.56 dB / 0.3615 | 18.63 dB / 0.367 | +0.07 dB |
+
+Isolated, `nfc`'s effect is small and consistently non-negative: a few
+hundredths of a dB at low/mid ISO, growing to +0.07-0.10dB at high ISO,
+where there's more real noise to catch. NLM/BNF already do most of the
+denoising before `nfc` runs, so little residual chroma noise is left, and
+the filter's blend (`alpha=0.3`) is conservative by design.
+
+The multi-dB drop from the pre-fork baseline (e.g. Kodak low ISO 25.04dB
+to 23.22dB) is not `nfc`. It's the `bcc` rewrite. The original `bcc`, at
+its default `contrast_gain=256`, is a mathematical no-op:
+`(y - median) * 256 >> 8 == y - median`. The rewritten `bcc` always
+performs a per-image min-max stretch, remapping the actual min/max luma
+onto `[16, 235]` regardless of whether the image needed it. That real,
+content-dependent transform, replacing an old default that did nothing,
+accounts for nearly all of the regression. (`hsc` at its current defaults
+is close to identity by construction, so it isn't a meaningful
+contributor.)
+
+**Caveat**: this is a full, representative ISP output, including
+sharpening/contrast/hue stages `JointISPNet` doesn't attempt. That's
+deliberate: the point is what a real classical pipeline outputs. But the
+PSNR/SSIM gap includes those cosmetic stages, not just demosaic/denoise
+fidelity. Read the qualitative strips, not just the table.
+
+**Demosaic vs. end-to-end, isolated at every noise level:**
+`compare_demosaic_denoise.py` produces a labeled 6-panel grid per test
+image, per noise regime, so both questions get answered at every noise
+level on the same input: row 1 is bilinear / Malvar (fast-openISP's `CFA`
+module alone) / `JointISPNet`, all rendered through this project's own
+`render_srgb()` so the only variable is the demosaic algorithm; row 2 is
+traditional ISP (full pipeline, own rendering) / `JointISPNet` / ground
+truth. `JointISPNet`'s panel is identical in both rows since it has no
+separate demosaic-only mode.
+
+| Dataset | Regime | Bilinear | Malvar (openISP) | Traditional ISP (full) | JointISPNet |
+|---|---|---|---|---|---|
+| Kodak | low ISO | 25.18 dB / 0.748 | **26.05 dB / 0.845** | 23.22 dB / 0.698 | **35.62 dB / 0.967** |
+| Kodak | mid ISO | 22.97 dB / 0.539 | 23.19 dB / 0.633 | 23.09 dB / 0.644 | **32.17 dB / 0.911** |
+| Kodak | high ISO | **13.97 dB** / 0.143 | 13.70 dB / 0.197 | 18.90 dB / 0.333 | **22.11 dB / 0.491** |
+| CBSD68 | low ISO | 24.19 dB / 0.738 | **25.12 dB / 0.844** | 20.98 dB / 0.674 | **35.25 dB / 0.973** |
+| CBSD68 | mid ISO | 22.28 dB / 0.553 | 22.61 dB / 0.658 | 20.91 dB / 0.629 | **31.84 dB / 0.922** |
+| CBSD68 | high ISO | **14.22 dB** / 0.169 | 14.12 dB / 0.237 | 18.63 dB / 0.367 | **22.05 dB / 0.533** |
+
+Same image (Kodak `kodim01`) across all three regimes:
+
+![kodim01, low ISO](outputs/demosaic_denoise_breakdown/kodak/low_iso/kodim01.png)
+![kodim01, mid ISO](outputs/demosaic_denoise_breakdown/kodak/mid_iso/kodim01.png)
+![kodim01, high ISO](outputs/demosaic_denoise_breakdown/kodak/high_iso/kodim01.png)
+
+Three findings:
+
+1. **Malvar's advantage over bilinear shrinks and reverses as noise
+   grows.** At low ISO Malvar wins clearly (26.05 vs 25.18dB): its
+   gradient-corrected kernel reconstructs edges better than plain
+   averaging. By high ISO its PSNR dips below bilinear's (13.70 vs
+   13.97dB), though SSIM stays higher. Malvar's kernel has negative
+   side-lobes for edge sharpening, which amplify noise along with edges;
+   bilinear's plain averaging incidentally filters some noise out.
+2. **The full pipeline only clearly beats undenoised demosaic once
+   there's real denoising work to do, and that takes until high ISO.** At
+   low ISO the full pipeline (23.22dB) scores well below isolated Malvar
+   (26.05dB); at mid ISO it's still marginally below on PSNR, though
+   ahead on SSIM. Its tone curve, sharpening, and the `bcc` rewrite's
+   always-on contrast stretch cost more PSNR than the demosaic gains
+   through mid ISO. Only at high ISO does NLM+BNF+NFC's denoising
+   outweigh that cost.
+3. **`JointISPNet` wins every regime and every task**: +9.6dB over the
+   best classical demosaic at low ISO, +3.2dB over the full traditional
+   pipeline at high ISO. The gap isn't from a better demosaic kernel; it's
+   from denoising being joint, RGB, and learned, instead of a separate
+   luma-only filter bolted on after.
 
 ## Tests
 
@@ -271,6 +351,5 @@ plain averaging does.
 venv\Scripts\python -m pytest tests -v
 ```
 
-Covers: degradation math (mosaic/pack round-trip, noise-free round-trip
-error, shape correctness), model forward-pass shapes across configs, and
-loss/metric sanity (identical images -> near-zero loss / high PSNR).
+Covers degradation math, model forward-pass shapes, and loss/metric
+sanity.
