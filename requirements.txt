@@ -1,0 +1,12 @@
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch
+numpy
+opencv-python-headless
+scikit-image
+imageio
+tqdm
+pyyaml
+tensorboard
+rawpy
+pillow
+requests
