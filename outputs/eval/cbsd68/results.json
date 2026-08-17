@@ -1,0 +1,23 @@
+{
+  "low_iso": {
+    "pred_psnr": 42.259569336386285,
+    "pred_ssim": 0.9905224600258995,
+    "baseline_psnr": 32.87078736810123,
+    "baseline_ssim": 0.9188248707967646,
+    "n_images": 68
+  },
+  "mid_iso": {
+    "pred_psnr": 37.9600705539479,
+    "pred_ssim": 0.9691958418663811,
+    "baseline_psnr": 31.372701252208035,
+    "baseline_ssim": 0.8676155639045379,
+    "n_images": 68
+  },
+  "high_iso": {
+    "pred_psnr": 28.97036605722764,
+    "pred_ssim": 0.7891319069792243,
+    "baseline_psnr": 22.915179140427533,
+    "baseline_ssim": 0.47546647138455334,
+    "n_images": 68
+  }
+}
