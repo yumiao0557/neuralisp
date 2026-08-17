@@ -1,7 +1,8 @@
 """
 Classical/traditional ISP reference baseline, using fast-openISP
-(https://github.com/QiuJueqin/fast-openISP, MIT licensed, vendored in
-./fast-openISP as a git checkout -- unmodified upstream code).
+(https://github.com/QiuJueqin/fast-openISP, vendored in ./fast-openISP as a
+fork with local additions: an `nfc` chroma noise reduction module and an
+`lsc` lens shading correction module, plus rewritten `bcc`/`hsc` stages).
 
 Runs the traditional pipeline (DPC/BLC/AAF/AWB/CNF/malvar-CFA/CCM/GAC/CSC/
 NLM/BNF/CEH/EEH/FCS/HSC/BCC) on the *exact same* synthetic noisy-Bayer test
@@ -79,10 +80,17 @@ def build_openisp_config(height: int, width: int, wb_gains: np.ndarray, ccm: np.
             "dpc": False,  # our noise model has no dead/hot-pixel defects; DPC's
                            # fixed threshold=30 would misfire on ordinary heavy
                            # Gaussian noise at high simulated ISO
-            "blc": True, "aaf": True, "awb": True, "cnf": True, "cfa": True,
-            "ccm": True, "gac": True, "csc": True, "nlm": True, "bnf": True,
-            "ceh": True, "eeh": True, "fcs": True, "hsc": True, "bcc": True,
-            "scl": False,
+            "blc": True,
+            "lsc": False,  # our forward model has no vignetting/lens-shading
+                           # falloff to correct; applying a radial gain here
+                           # would just introduce a distortion not present in
+                           # the ground truth, same reasoning as disabling DPC
+            "aaf": True, "awb": True, "cnf": True, "cfa": True,
+            "ccm": True, "gac": True, "csc": True, "nlm": True,
+            "nfc": True,  # chroma noise IS simulated by our forward model,
+                          # so this one is a fair, relevant comparison
+            "bnf": True, "ceh": True, "eeh": True, "fcs": True, "hsc": True,
+            "bcc": True, "scl": False,
         },
         "hardware": {
             "raw_width": width, "raw_height": height,
@@ -98,12 +106,13 @@ def build_openisp_config(height: int, width: int, wb_gains: np.ndarray, ccm: np.
         "gac": {"gain": 256, "gamma": 0.42},
         "csc": None,
         "nlm": {"search_window_size": 9, "patch_size": 3, "h": 10},
+        "nfc": {"alpha": 0.3, "thresh": 2.5},
         "bnf": {"intensity_sigma": 0.8, "spatial_sigma": 0.8},
         "ceh": {"tiles": [4, 6], "clip_limit": 0.01},
         "eeh": {"edge_gain": 384, "flat_threshold": 4, "edge_threshold": 8, "delta_threshold": 64},
         "fcs": {"delta_min": 8, "delta_max": 32},
-        "hsc": {"hue_offset": 0, "saturation_gain": 256},
-        "bcc": {"brightness_offset": 0, "contrast_gain": 256},
+        "hsc": {"hue_offset": 0, "saturation_intensity": 1.0},
+        "bcc": {"brightness_offset": 0, "new_max": 235, "new_min": 16},
     }
     return Config(cfg_dict)
 

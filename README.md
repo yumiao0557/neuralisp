@@ -240,16 +240,22 @@ shippable product:
 
 ## Traditional ISP baseline
 
-`reference_isp/` runs a real classical ISP ([fast-openISP](https://github.com/QiuJueqin/fast-openISP),
-vendored, MIT licensed) — DPC/BLC/AAF/AWB/CNF/Malvar-demosaic/CCM/gamma/CSC/NLM/BNF/CEH/EEH/FCS/HSC/BCC —
-on the exact same synthetic test inputs, for a fair 4-way comparison against
-bilinear and `JointISPNet`. Headline result: at high simulated ISO the
-traditional pipeline's real denoise stages (NLM/BNF) meaningfully beat plain
-bilinear, but `JointISPNet` still wins by a wide margin (22.1dB vs 18.8dB
-PSNR on Kodak) because NLM/BNF only denoise luma, leaving visible chroma
-noise that the joint RGB network doesn't. See `reference_isp/README.md` for
-the full numbers and a genuinely counterintuitive finding at low ISO (the
-traditional pipeline scores *below* bilinear there — its own gamma curve and
+`reference_isp/` runs a real classical ISP — a fork of
+[fast-openISP](https://github.com/QiuJueqin/fast-openISP) (MIT licensed)
+with two local additions, `lsc` (lens shading correction) and `nfc`
+(chroma noise reduction), plus a rewritten `bcc`/`hsc`: DPC/BLC/**LSC**/
+AAF/AWB/CNF/Malvar-demosaic/CCM/gamma/CSC/NLM/**NFC**/BNF/CEH/EEH/FCS/HSC/
+BCC — on the exact same synthetic test inputs, for a fair 4-way comparison
+against bilinear and `JointISPNet`. Headline result: at high simulated ISO
+the traditional pipeline's real denoise stages (NLM/BNF/NFC) meaningfully
+beat plain bilinear, but `JointISPNet` still wins by a wide margin (22.1dB
+vs 18.9dB PSNR on Kodak) because NLM/BNF only denoise luma and `nfc`'s
+isolated contribution turns out to be small (+0.02 to +0.10dB — see
+below), leaving visible chroma noise that the joint RGB network doesn't.
+See `reference_isp/README.md` for the full numbers, an ablation isolating
+`nfc`'s true effect from the larger `bcc` rewrite it's easy to confuse it
+with, and a genuinely counterintuitive finding at low ISO (the traditional
+pipeline scores *below* bilinear there — its own gamma curve and
 sharpening/contrast stages, not demosaic quality, turn out to dominate the
 error at low noise). `reference_isp/compare_demosaic_denoise.py` isolates
 demosaic-only from end-to-end at every noise level (bilinear vs. Malvar vs.
