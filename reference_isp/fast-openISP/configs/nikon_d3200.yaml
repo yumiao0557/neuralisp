@@ -1,6 +1,7 @@
 module_enable_status:                 # do NOT modify modules order
   dpc: True
   blc: True
+  lsc: True
   aaf: True
   awb: True
   cnf: True
@@ -9,6 +10,7 @@ module_enable_status:                 # do NOT modify modules order
   gac: True
   csc: True
   nlm: True
+  nfc: True
   bnf: True
   ceh: True
   eeh: True
@@ -36,6 +38,11 @@ blc:
   bl_b: 0
   alpha: 0                            # x1024
   beta: 0                             # x1024
+
+lsc:
+  k: 0.0002                            # radial gain slope
+  offset: 0                            # subtractive offset to avoid over-brightening
+  flat_radius: 640                     # radius (px) within which no correction is applied
 
 aaf: ~
 
@@ -70,6 +77,10 @@ nlm:
   patch_size: 5
   h: 4                                # larger value has stronger smoothing effect
 
+nfc:
+  alpha: 0.3                           # blend strength applied to detected noisy chroma pixels
+  thresh: 2.5                          # sigma multiplier; higher = stricter noise detection
+
 bnf:
   intensity_sigma: 0.5                # larger value has stronger smoothing effect
   spatial_sigma: 0.4                  # larger value has stronger smoothing effect
@@ -90,11 +101,12 @@ fcs:
 
 hsc:
   hue_offset: 0                       # in degree
-  saturation_gain: 256                # x256
+  saturation_intensity: 1.0           # 1.0 = no change
 
 bcc:
   brightness_offset: 0
-  contrast_gain: 256                  # x256
+  new_max: 235                        # desired output ceiling
+  new_min: 16                         # desired output floor
 
 scl:
   width: 1536

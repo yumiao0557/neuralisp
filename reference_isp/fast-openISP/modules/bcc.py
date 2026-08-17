@@ -15,15 +15,20 @@ class BCC(BasicModule):
         super().__init__(cfg)
 
         self.brightness_offset = np.array(self.params.brightness_offset, dtype=np.int32)
-        self.contrast_gain = np.array(self.params.contrast_gain, dtype=np.int32)  # x256
+        self.new_max = np.array(self.params.new_max, dtype=np.int32)
+        self.new_min = np.array(self.params.new_min, dtype=np.int32)
 
     def execute(self, data):
         y_image = data['y_image'].astype(np.int32)
 
-        bcc_y_image = np.clip(y_image + self.brightness_offset, 0, self.cfg.saturation_values.sdr)
+        old_max = y_image.max()
+        old_min = y_image.min()
+        old_mid = (old_max + old_min) / 2
+        new_mid = (self.new_max + self.new_min) / 2
 
-        y_median = np.median(bcc_y_image).astype(np.int32)
-        bcc_y_image = np.right_shift((bcc_y_image - y_median) * self.contrast_gain, 8) + y_median
-        bcc_y_image = np.clip(bcc_y_image, 0, self.cfg.saturation_values.sdr)
+        # stretch the frame's own min-max range onto (new_min, new_max)
+        contrast_y = (y_image - old_mid) * (self.new_max - self.new_min) / (old_max - old_min) + new_mid
 
-        data['y_image'] = bcc_y_image.astype(np.uint8)
+        bcc_y_image = np.clip(contrast_y + self.brightness_offset, 0, 240).astype(np.uint8)
+
+        data['y_image'] = bcc_y_image

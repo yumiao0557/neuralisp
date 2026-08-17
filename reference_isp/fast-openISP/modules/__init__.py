@@ -13,5 +13,7 @@ from .eeh import EEH
 from .fcs import FCS
 from .gac import GAC
 from .hsc import HSC
+from .lsc import LSC
+from .nfc import NFC
 from .nlm import NLM
 from .scl import SCL

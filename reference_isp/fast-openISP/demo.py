@@ -53,8 +53,9 @@ def demo_intermediate_results():
         cfg.eeh.flat_threshold = 1
         cfg.eeh.flat_threshold = 2
         cfg.eeh.edge_gain = 1280
-        cfg.hsc.saturation_gain = 320
-        cfg.bcc.contrast_gain = 280
+        cfg.hsc.saturation_intensity = 1.3
+        cfg.bcc.new_min = 0
+        cfg.bcc.new_max = 240
 
     pipeline = Pipeline(cfg)
 
