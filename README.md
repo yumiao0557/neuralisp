@@ -318,8 +318,11 @@ separate demosaic-only mode.
 
 Same image (Kodak `kodim01`) across all three regimes:
 
+**Low ISO**
 ![kodim01, low ISO](outputs/demosaic_denoise_breakdown/kodak/low_iso/kodim01.png)
+**Mid ISO**
 ![kodim01, mid ISO](outputs/demosaic_denoise_breakdown/kodak/mid_iso/kodim01.png)
+**Mid ISO**
 ![kodim01, high ISO](outputs/demosaic_denoise_breakdown/kodak/high_iso/kodim01.png)
 
 Three findings:
