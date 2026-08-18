@@ -8,12 +8,21 @@ level gets both comparisons on the SAME noisy input:
     [2] Malvar demosaic (fast-openISP's CFA module, isolated -- no WB/CCM/
         gamma/denoise/sharpening, so it's directly comparable to [1])
     [3] JointISPNet
-  Row 2 -- end-to-end comparison:
-    [4] traditional ISP (fast-openISP's full pipeline: its own demosaic,
-        NLM/BNF denoise, gamma, sharpening -- rendered with ITS OWN stages,
-        because that's what that system actually outputs end-to-end)
+  Row 2 -- end-to-end comparison, SAME SCOPE as JointISPNet:
+    [4] classical demosaic+denoise (fast-openISP, Malvar + NLM/NFC/BNF only
+        -- no sharpening/contrast/hue/brightness. Same job description as
+        JointISPNet: noisy Bayer -> demosaiced, denoised RGB, nothing more.
+        This is the fair "does joint beat cascaded" test -- rendered with
+        fast-openISP's own gamma/CCM stages, because that's what that
+        system actually outputs for this scope.)
     [5] JointISPNet (same output as [3] -- see note below)
     [6] ground truth
+
+fast-openISP's full product-style pipeline (adding CEH/EEH/FCS/HSC/BCC) is
+still computed and saved in results.json as "traditional_isp_full" for
+reference, but it's not a same-scope comparison -- see
+reference_isp/compare_traditional_isp.py's docstring for why that inflates
+its own PSNR/SSIM gap in one direction and deflates it in another.
 
 Panels [1], [2], [3], [6] are rendered through THIS PROJECT'S OWN
 render_srgb (same WB/CCM/gamma) so demosaic differences aren't confounded
@@ -68,7 +77,7 @@ LABELS = [
     "Bilinear demosaic",
     "Malvar demosaic (openISP)",
     "JointISPNet",
-    "Traditional ISP (full pipeline)",
+    "Classical demosaic+denoise\n(Malvar+NLM+NFC+BNF, same scope)",
     "JointISPNet (same as row 1)",
     "Ground truth",
 ]
@@ -145,13 +154,18 @@ def process_regime(model, device, clean, regime_name, gain_range):
 
     wb_np = deg.wb_gains[0].cpu().numpy()
     ccm_np = deg.ccm[0].cpu().numpy()
-    trad_output = trad.run_traditional_isp(full_bayer, wb_np, ccm_np)  # uint8 HWC
-    trad_tensor = trad._uint8_hwc_to_tensor01(trad_output, device)
+    # classical_dd: same scope as JointISPNet (demosaic+denoise only) -- the panel/metric
+    # this comparison leads with. traditional_isp_full: reference-only, not same-scope.
+    classical_output = trad.run_traditional_isp(full_bayer, wb_np, ccm_np, full_pipeline=False)
+    full_output = trad.run_traditional_isp(full_bayer, wb_np, ccm_np, full_pipeline=True)
+    classical_tensor = trad._uint8_hwc_to_tensor01(classical_output, device)
+    full_tensor = trad._uint8_hwc_to_tensor01(full_output, device)
 
     metrics = {
         "bilinear": (psnr_metric(bilinear_srgb, gt_srgb), ssim_metric(bilinear_srgb, gt_srgb)),
         "malvar": (psnr_metric(malvar_srgb, gt_srgb), ssim_metric(malvar_srgb, gt_srgb)),
-        "traditional_isp": (psnr_metric(trad_tensor, gt_srgb), ssim_metric(trad_tensor, gt_srgb)),
+        "classical_dd": (psnr_metric(classical_tensor, gt_srgb), ssim_metric(classical_tensor, gt_srgb)),
+        "traditional_isp_full": (psnr_metric(full_tensor, gt_srgb), ssim_metric(full_tensor, gt_srgb)),
         "net": (psnr_metric(net_srgb, gt_srgb), ssim_metric(net_srgb, gt_srgb)),
     }
 
@@ -159,7 +173,7 @@ def process_regime(model, device, clean, regime_name, gain_range):
         trad._tensor01_to_uint8_hwc(bilinear_srgb[0]),
         trad._tensor01_to_uint8_hwc(malvar_srgb[0]),
         trad._tensor01_to_uint8_hwc(net_srgb[0]),
-        trad_output,
+        classical_output,
         trad._tensor01_to_uint8_hwc(net_srgb[0]),
         trad._tensor01_to_uint8_hwc(gt_srgb[0]),
     ]
@@ -190,7 +204,8 @@ def main():
     for regime_name, gain_range in NOISE_REGIMES:
         torch.manual_seed(42)
         regime_dir = out_root / regime_name
-        acc = {k: {"psnr": [], "ssim": []} for k in ("bilinear", "malvar", "traditional_isp", "net")}
+        acc = {k: {"psnr": [], "ssim": []} for k in
+               ("bilinear", "malvar", "classical_dd", "traditional_isp_full", "net")}
 
         for i, (clean, name) in enumerate(loader):
             clean = clean.to(device)
@@ -211,9 +226,9 @@ def main():
         all_results[regime_name] = summary
 
         print(f"[{dataset_name}/{regime_name}] n={summary['bilinear']['n_images']}")
-        for k in ("bilinear", "malvar", "traditional_isp", "net"):
+        for k in ("bilinear", "malvar", "classical_dd", "traditional_isp_full", "net"):
             m = summary[k]
-            print(f"  {k:<16} PSNR={m['psnr']:6.2f}dB  SSIM={m['ssim']:.4f}")
+            print(f"  {k:<22} PSNR={m['psnr']:6.2f}dB  SSIM={m['ssim']:.4f}")
 
     out_root.mkdir(parents=True, exist_ok=True)
     with open(out_root / "results.json", "w") as f:

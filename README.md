@@ -213,9 +213,11 @@ real pipeline, not just the bilinear strawman above.
   CSC, NLM, NFC, BNF, CEH, EEH, FCS, HSC, BCC. Full history:
   [yumiao0557/fast-openISP](https://github.com/yumiao0557/fast-openISP).
 - `compare_traditional_isp.py`: reuses this project's own `degrade()` for
-  a noisy Bayer mosaic, runs it through fast-openISP with a matched
-  config, and produces a 4-way comparison against bilinear, `JointISPNet`,
-  and ground truth.
+  a noisy Bayer mosaic, runs it through fast-openISP in **two scopes** —
+  `classical_dd` (stops after `bnf`: Malvar + NLM/NFC/BNF denoise only,
+  same job as `JointISPNet`, the fair "does joint beat cascaded" number)
+  and `traditional_isp_full` (everything on, reference-only) — against
+  bilinear, `JointISPNet`, and ground truth.
 - `compare_demosaic_denoise.py`: splits that comparison into demosaic
   alone and denoise alone, since the full pipeline confounds both.
 
@@ -235,32 +237,42 @@ venv\Scripts\python reference_isp\compare_demosaic_denoise.py --checkpoint check
 
 **Results (24 Kodak, 68 CBSD68, matched conditions):**
 
-| Dataset | Regime | Bilinear | Malvar (openISP) | Traditional ISP (full) | JointISPNet |
-|---|---|---|---|---|---|
-| Kodak | low ISO | 25.18 dB / 0.748 | **26.05 dB / 0.845** | 23.22 dB / 0.698 | **35.62 dB / 0.967** |
-| Kodak | mid ISO | 22.97 dB / 0.539 | 23.19 dB / 0.633 | 23.09 dB / 0.644 | **32.17 dB / 0.911** |
-| Kodak | high ISO | **13.97 dB** / 0.143 | 13.70 dB / 0.197 | 18.90 dB / 0.333 | **22.11 dB / 0.491** |
-| CBSD68 | low ISO | 24.19 dB / 0.738 | **25.12 dB / 0.844** | 20.98 dB / 0.674 | **35.25 dB / 0.973** |
-| CBSD68 | mid ISO | 22.28 dB / 0.553 | 22.61 dB / 0.658 | 20.91 dB / 0.629 | **31.84 dB / 0.922** |
-| CBSD68 | high ISO | **14.22 dB** / 0.169 | 14.12 dB / 0.237 | 18.63 dB / 0.367 | **22.05 dB / 0.533** |
+| Dataset | Regime | Bilinear | Malvar (openISP) | **classical_dd** (same scope) | traditional_isp_full (reference) | JointISPNet |
+|---|---|---|---|---|---|---|
+| Kodak | low ISO | 25.18 / 0.748 | **26.05 / 0.845** | 24.61 / 0.688 | 23.22 / 0.698 | **35.62 / 0.967** |
+| Kodak | mid ISO | 22.97 / 0.539 | 23.19 / 0.633 | 24.15 / 0.629 | 23.09 / 0.644 | **32.17 / 0.911** |
+| Kodak | high ISO | 13.97 / 0.143 | 13.70 / 0.197 | 18.81 / 0.313 | 18.90 / 0.333 | **22.11 / 0.491** |
+| CBSD68 | low ISO | 24.19 / 0.738 | **25.12 / 0.844** | 24.07 / 0.680 | 20.98 / 0.674 | **35.25 / 0.973** |
+| CBSD68 | mid ISO | 22.28 / 0.553 | 22.61 / 0.658 | 23.63 / 0.625 | 20.91 / 0.629 | **31.84 / 0.922** |
+| CBSD68 | high ISO | 14.22 / 0.169 | 14.12 / 0.237 | 18.73 / 0.340 | 18.63 / 0.367 | **22.05 / 0.533** |
 
-Traditional ISP runs with `nfc` enabled throughout (see the ablation
-below for its isolated effect).
+(PSNR dB / SSIM). `classical_dd` is `full_pipeline=False` in
+`build_openisp_config` — Malvar + NLM/NFC/BNF, stopped right after `bnf`,
+same job description as `JointISPNet`. `traditional_isp_full` runs
+everything (CEH/EEH/FCS/HSC/BCC included) and is kept for reference, not
+as the fairness baseline; see the paragraph below for why it moves around
+independent of denoise quality. Both run with `nfc` enabled (see the
+ablation further down for its isolated effect on `traditional_isp_full`).
 
-At low and mid ISO the traditional pipeline scores below plain bilinear,
-despite using Malvar demosaic and real denoise stages. At low noise,
-demosaic/denoise error is tiny for both, so the dominant error source is
-fast-openISP's own tone response: GAC uses a fixed gamma (0.42) instead of
-an exact sRGB curve, EEH and CEH push pixel values away from a flat
-rendering, and `nfc` smooths chroma detail that isn't yet noise. These are
-standard ISP behaviors that often look better to a human but cost
-PSNR/SSIM against a literal ground truth. Only at high ISO does the
-pipeline pull ahead of bilinear.
+**`classical_dd` vs. `JointISPNet` is the comparison to trust** — same
+input, same color conditions, same job. `JointISPNet` wins every regime,
++7-11dB at low/mid ISO and +3.3dB at high ISO where the task is genuinely
+hardest for everyone.
 
-At high ISO, `JointISPNet` still wins by a wide margin (22.1dB vs 18.9dB,
-SSIM 0.49 vs 0.33). NLM and BNF only denoise luma, and `nfc`'s gain is
-modest, so chroma noise still passes through more than in the joint
-network's output.
+`traditional_isp_full` scores *below* `classical_dd` in most rows (e.g.
+CBSD68 low ISO: 20.98 vs 24.07) despite doing strictly more work — Malvar
+demosaic and real denoise stages are still in there, but GAC's fixed gamma
+(0.42, not an exact sRGB curve), EEH/CEH pushing pixels away from a flat
+rendering, and the `bcc` rewrite's always-on contrast stretch (see below)
+cost more PSNR than any of that machinery gains. These are standard ISP
+behaviors that often look better to a human but cost PSNR/SSIM against a
+literal ground truth — which is exactly why `classical_dd` exists as a
+separate, controlled number instead of relying on the full pipeline alone.
+
+At high ISO, `JointISPNet` still wins by a wide margin over both classical
+variants (22.1dB vs 18.7-18.9dB). NLM and BNF only denoise luma, and
+`nfc`'s gain is modest, so chroma noise still passes through more than in
+the joint network's output, regardless of which classical scope you use.
 
 **Does chroma noise reduction help?** `nfc` compares each Cb/Cr pixel to
 its 8-neighbor mean/std and blends toward the mean past `thresh` standard
@@ -305,18 +317,21 @@ image, per noise regime, so both questions get answered at every noise
 level on the same input: row 1 is bilinear / Malvar (fast-openISP's `CFA`
 module alone) / `JointISPNet`, all rendered through this project's own
 `render_srgb()` so the only variable is the demosaic algorithm; row 2 is
-traditional ISP (full pipeline, own rendering) / `JointISPNet` / ground
-truth. `JointISPNet`'s panel is identical in both rows since it has no
-separate demosaic-only mode.
+`classical_dd` (Malvar+NLM+NFC+BNF, same scope as `JointISPNet`, own
+rendering) / `JointISPNet` / ground truth. `JointISPNet`'s panel is
+identical in both rows since it has no separate demosaic-only mode.
+(`traditional_isp_full`'s numbers are still computed and saved to
+`results.json` for reference, just not given a grid panel — see the main
+results table above for why it isn't the fairness baseline.)
 
-| Dataset | Regime | Bilinear | Malvar (openISP) | Traditional ISP (full) | JointISPNet |
+| Dataset | Regime | Bilinear | Malvar (openISP) | **classical_dd** | JointISPNet |
 |---|---|---|---|---|---|
-| Kodak | low ISO | 25.18 dB / 0.748 | **26.05 dB / 0.845** | 23.22 dB / 0.698 | **35.62 dB / 0.967** |
-| Kodak | mid ISO | 22.97 dB / 0.539 | 23.19 dB / 0.633 | 23.09 dB / 0.644 | **32.17 dB / 0.911** |
-| Kodak | high ISO | **13.97 dB** / 0.143 | 13.70 dB / 0.197 | 18.90 dB / 0.333 | **22.11 dB / 0.491** |
-| CBSD68 | low ISO | 24.19 dB / 0.738 | **25.12 dB / 0.844** | 20.98 dB / 0.674 | **35.25 dB / 0.973** |
-| CBSD68 | mid ISO | 22.28 dB / 0.553 | 22.61 dB / 0.658 | 20.91 dB / 0.629 | **31.84 dB / 0.922** |
-| CBSD68 | high ISO | **14.22 dB** / 0.169 | 14.12 dB / 0.237 | 18.63 dB / 0.367 | **22.05 dB / 0.533** |
+| Kodak | low ISO | 25.18 dB / 0.748 | **26.05 dB / 0.845** | 24.61 dB / 0.688 | **35.62 dB / 0.967** |
+| Kodak | mid ISO | 22.97 dB / 0.539 | 23.19 dB / 0.633 | 24.15 dB / 0.629 | **32.17 dB / 0.911** |
+| Kodak | high ISO | **13.97 dB** / 0.143 | 13.70 dB / 0.197 | 18.81 dB / 0.313 | **22.11 dB / 0.491** |
+| CBSD68 | low ISO | 24.19 dB / 0.738 | **25.12 dB / 0.844** | 24.07 dB / 0.680 | **35.25 dB / 0.973** |
+| CBSD68 | mid ISO | 22.28 dB / 0.553 | 22.61 dB / 0.658 | 23.63 dB / 0.625 | **31.84 dB / 0.922** |
+| CBSD68 | high ISO | **14.22 dB** / 0.169 | 14.12 dB / 0.237 | 18.73 dB / 0.340 | **22.05 dB / 0.533** |
 
 Same image (Kodak `kodim01`) across all three regimes:
 
@@ -336,19 +351,18 @@ Three findings:
    13.97dB), though SSIM stays higher. Malvar's kernel has negative
    side-lobes for edge sharpening, which amplify noise along with edges;
    bilinear's plain averaging incidentally filters some noise out.
-2. **The full pipeline only clearly beats undenoised demosaic once
-   there's real denoising work to do, and that takes until high ISO.** At
-   low ISO the full pipeline (23.22dB) scores well below isolated Malvar
-   (26.05dB); at mid ISO it's still marginally below on PSNR, though
-   ahead on SSIM. Its tone curve, sharpening, and the `bcc` rewrite's
-   always-on contrast stretch cost more PSNR than the demosaic gains
-   through mid ISO. Only at high ISO does NLM+BNF+NFC's denoising
-   outweigh that cost.
+2. **Even the same-scope classical pipeline (`classical_dd`) only clearly
+   beats undenoised demosaic once there's real denoising work to do.** At
+   low ISO `classical_dd` (24.61dB) still trails isolated Malvar
+   (26.05dB) — its own gamma/tone response costs a little PSNR even
+   without any cosmetic stages added. By mid ISO `classical_dd` has
+   pulled ahead of both bilinear and Malvar; by high ISO NLM+NFC+BNF's
+   real denoising is worth nearly 5dB over bare Malvar (18.81 vs 13.70dB).
 3. **`JointISPNet` wins every regime and every task**: +9.6dB over the
-   best classical demosaic at low ISO, +3.2dB over the full traditional
-   pipeline at high ISO. The gap isn't from a better demosaic kernel; it's
-   from denoising being joint, RGB, and learned, instead of a separate
-   luma-only filter bolted on after.
+   best classical demosaic at low ISO, +3.3dB over the same-scope
+   classical demosaic+denoise pipeline at high ISO. The gap isn't from a
+   better demosaic kernel; it's from denoising being joint, RGB, and
+   learned, instead of a separate luma-only filter bolted on after.
 
 ## Tests
 

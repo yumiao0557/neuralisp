@@ -10,7 +10,12 @@
       "ssim": 0.8444648335377375,
       "n_images": 24
     },
-    "traditional_isp": {
+    "classical_dd": {
+      "psnr": 24.61473735173543,
+      "ssim": 0.6881025905410448,
+      "n_images": 24
+    },
+    "traditional_isp_full": {
       "psnr": 23.216294209162395,
       "ssim": 0.6983310977617899,
       "n_images": 24
@@ -32,7 +37,12 @@
       "ssim": 0.6333902503053347,
       "n_images": 24
     },
-    "traditional_isp": {
+    "classical_dd": {
+      "psnr": 24.151798248291016,
+      "ssim": 0.6285758602122465,
+      "n_images": 24
+    },
+    "traditional_isp_full": {
       "psnr": 23.090962330500286,
       "ssim": 0.6436954202751318,
       "n_images": 24
@@ -54,7 +64,12 @@
       "ssim": 0.1966414200142026,
       "n_images": 24
     },
-    "traditional_isp": {
+    "classical_dd": {
+      "psnr": 18.814388751983643,
+      "ssim": 0.31247806549072266,
+      "n_images": 24
+    },
+    "traditional_isp_full": {
       "psnr": 18.89826424916585,
       "ssim": 0.3329427105685075,
       "n_images": 24

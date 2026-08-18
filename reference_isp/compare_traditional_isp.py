@@ -4,29 +4,34 @@ Classical/traditional ISP reference baseline, using fast-openISP
 fork with local additions: an `nfc` chroma noise reduction module and an
 `lsc` lens shading correction module, plus rewritten `bcc`/`hsc` stages).
 
-Runs the traditional pipeline (DPC/BLC/AAF/AWB/CNF/malvar-CFA/CCM/GAC/CSC/
-NLM/BNF/CEH/EEH/FCS/HSC/BCC) on the *exact same* synthetic noisy-Bayer test
-inputs used by neuralisp.evaluate, so it's a fair end-to-end comparison:
+Runs fast-openISP on the *exact same* synthetic noisy-Bayer test inputs
+used by neuralisp.evaluate, in two scopes, so the comparison against
+JointISPNet can be read two ways:
 
-    1. bilinear demosaic      (ours, no denoise at all)
-    2. fast-openISP           (traditional: real demosaic algorithm + real
-                                denoise stages + sharpening/contrast, no ML)
-    3. JointISPNet             (ours, learned demosaic+denoise)
-    4. ground truth
+    1. bilinear demosaic          (ours, no denoise at all)
+    2. classical_dd                (fast-openISP, SAME SCOPE as JointISPNet:
+                                     Malvar demosaic + NLM/NFC/BNF denoise
+                                     only -- no sharpening/contrast/hue/
+                                     brightness. The fair, apples-to-apples
+                                     "does joint beat cascaded" test.)
+    3. traditional_isp_full        (fast-openISP, everything on: adds CEH/
+                                     EEH/FCS/HSC/BCC -- what a real product
+                                     classical ISP would actually ship.)
+    4. JointISPNet                  (ours, learned demosaic+denoise)
+    5. ground truth
 
 The traditional pipeline is given the SAME per-image white-balance gains
 and color-correction matrix that degrade() sampled for that image (see
 build_openisp_config), so differences in the comparison reflect demosaic/
 denoise/pipeline quality, not incidental color differences.
 
-Caveat worth knowing before reading the numbers: fast-openISP's default
-pipeline includes EEH (sharpening) and CEH (contrast/CLAHE) stages that
-our network does not attempt. Those push pixel values away from the flat,
-un-enhanced ground truth on purpose (they're real, standard ISP stages
-that usually look better to a human), which can make its PSNR/SSIM look
-worse than a pure demosaic+denoise comparison would -- despite the output
-often looking perfectly reasonable. Look at the qualitative PNGs, not just
-the numbers.
+Caveat on traditional_isp_full specifically: it includes EEH (sharpening)
+and CEH (contrast/CLAHE) stages that JointISPNet does not attempt. Those
+push pixel values away from the flat, un-enhanced ground truth on purpose
+(real, standard ISP stages that usually look better to a human), which can
+make its PSNR/SSIM look worse than a same-scope comparison would -- despite
+the output often looking perfectly reasonable. classical_dd is the number
+to trust for "is the joint network better," not traditional_isp_full.
 
 Run (from repo root, with venv active):
     python reference_isp\\compare_traditional_isp.py --checkpoint checkpoints\\joint_isp_v1\\best.pt --dataset data_raw\\test\\kodak
@@ -65,11 +70,26 @@ RAW_BIT_DEPTH = 12
 RAW_MAX = 2 ** RAW_BIT_DEPTH - 1  # 4095 -- matches degrade()'s ADC quantization
 
 
-def build_openisp_config(height: int, width: int, wb_gains: np.ndarray, ccm: np.ndarray) -> Config:
+def build_openisp_config(
+    height: int, width: int, wb_gains: np.ndarray, ccm: np.ndarray, full_pipeline: bool = True
+) -> Config:
     """Config matched to this project's forward model: no black-level offset
     (our synthetic RAW is already post-BLC), and the SAME per-image WB gains
     / CCM sampled by degrade(), so the classical pipeline runs under
     identical color conditions to the network and the ground truth.
+
+    full_pipeline=True: the complete product-style pipeline (adds CEH/EEH/
+    FCS/HSC/BCC -- contrast, sharpening, hue/saturation, brightness -- none
+    of which JointISPNet attempts, so this is *not* a same-scope comparison,
+    just "what would a real classical ISP output").
+
+    full_pipeline=False: stops right after BNF -- Malvar demosaic + NLM +
+    NFC (chroma) + BNF denoise, nothing else. This is the actual same-scope
+    comparison: both sides own exactly "noisy Bayer -> demosaiced, denoised
+    linear-ish RGB" and nothing more, which is what JointISPNet was built to
+    do as a module (see project README's pipeline-boundary diagram). EEH and
+    FCS are disabled together because FCS depends on EEH's edge map
+    (fast-openISP raises if FCS is enabled without EEH).
     """
     r_gain = int(round(float(wb_gains[0]) * 1024))
     b_gain = int(round(float(wb_gains[2]) * 1024))
@@ -89,8 +109,10 @@ def build_openisp_config(height: int, width: int, wb_gains: np.ndarray, ccm: np.
             "ccm": True, "gac": True, "csc": True, "nlm": True,
             "nfc": True,  # chroma noise IS simulated by our forward model,
                           # so this one is a fair, relevant comparison
-            "bnf": True, "ceh": True, "eeh": True, "fcs": True, "hsc": True,
-            "bcc": True, "scl": False,
+            "bnf": True,
+            "ceh": full_pipeline, "eeh": full_pipeline, "fcs": full_pipeline,
+            "hsc": full_pipeline, "bcc": full_pipeline,
+            "scl": False,
         },
         "hardware": {
             "raw_width": width, "raw_height": height,
@@ -117,10 +139,12 @@ def build_openisp_config(height: int, width: int, wb_gains: np.ndarray, ccm: np.
     return Config(cfg_dict)
 
 
-def run_traditional_isp(bayer_01: np.ndarray, wb_gains: np.ndarray, ccm: np.ndarray) -> np.ndarray:
+def run_traditional_isp(
+    bayer_01: np.ndarray, wb_gains: np.ndarray, ccm: np.ndarray, full_pipeline: bool = True
+) -> np.ndarray:
     """bayer_01: (H, W) float in [0,1]. Returns (H, W, 3) uint8 sRGB-ish output."""
     height, width = bayer_01.shape
-    cfg = build_openisp_config(height, width, wb_gains, ccm)
+    cfg = build_openisp_config(height, width, wb_gains, ccm, full_pipeline=full_pipeline)
     pipeline = Pipeline(cfg)
 
     bayer_uint16 = np.round(np.clip(bayer_01, 0.0, 1.0) * RAW_MAX).astype(np.uint16)
@@ -168,7 +192,8 @@ def main():
     for regime_name, gain_range in NOISE_REGIMES:
         torch.manual_seed(42)  # match neuralisp.evaluate's seeding for comparable numbers
 
-        metrics = {k: {"psnr": [], "ssim": []} for k in ("bilinear", "traditional_isp", "net")}
+        method_names = ("bilinear", "classical_dd", "traditional_isp_full", "net")
+        metrics = {k: {"psnr": [], "ssim": []} for k in method_names}
         regime_dir = out_root / regime_name
 
         for i, (clean, name) in enumerate(loader):
@@ -184,20 +209,28 @@ def main():
             full_bayer = unpack_rggb(deg.packed_bayer)[0, 0].cpu().numpy()
             wb_gains_np = deg.wb_gains[0].cpu().numpy()
             ccm_np = deg.ccm[0].cpu().numpy()
-            trad_output = run_traditional_isp(full_bayer, wb_gains_np, ccm_np)  # uint8 HWC
+            # classical_dd: same scope as JointISPNet (demosaic + denoise only, no
+            # sharpening/contrast/hue/brightness). traditional_isp_full: the
+            # complete product-style pipeline, kept for reference.
+            classical_output = run_traditional_isp(full_bayer, wb_gains_np, ccm_np, full_pipeline=False)
+            trad_output = run_traditional_isp(full_bayer, wb_gains_np, ccm_np, full_pipeline=True)
+            classical_tensor = _uint8_hwc_to_tensor01(classical_output, device)
             trad_tensor = _uint8_hwc_to_tensor01(trad_output, device)
 
             metrics["bilinear"]["psnr"].append(psnr_metric(base_srgb, gt_srgb))
             metrics["bilinear"]["ssim"].append(ssim_metric(base_srgb, gt_srgb))
             metrics["net"]["psnr"].append(psnr_metric(pred_srgb, gt_srgb))
             metrics["net"]["ssim"].append(ssim_metric(pred_srgb, gt_srgb))
-            metrics["traditional_isp"]["psnr"].append(psnr_metric(trad_tensor, gt_srgb))
-            metrics["traditional_isp"]["ssim"].append(ssim_metric(trad_tensor, gt_srgb))
+            metrics["classical_dd"]["psnr"].append(psnr_metric(classical_tensor, gt_srgb))
+            metrics["classical_dd"]["ssim"].append(ssim_metric(classical_tensor, gt_srgb))
+            metrics["traditional_isp_full"]["psnr"].append(psnr_metric(trad_tensor, gt_srgb))
+            metrics["traditional_isp_full"]["ssim"].append(ssim_metric(trad_tensor, gt_srgb))
 
             if i < args.n_qualitative:
                 regime_dir.mkdir(parents=True, exist_ok=True)
                 strip = [
                     _tensor01_to_uint8_hwc(base_srgb[0]),
+                    classical_output,
                     trad_output,
                     _tensor01_to_uint8_hwc(pred_srgb[0]),
                     _tensor01_to_uint8_hwc(gt_srgb[0]),
@@ -210,15 +243,15 @@ def main():
         all_results[regime_name] = summary
 
         print(f"[{dataset_name}/{regime_name}] n={summary['bilinear']['n_images']}")
-        for method in ("bilinear", "traditional_isp", "net"):
+        for method in method_names:
             m = summary[method]
-            print(f"  {method:<16} PSNR={m['psnr']:6.2f}dB  SSIM={m['ssim']:.4f}")
+            print(f"  {method:<22} PSNR={m['psnr']:6.2f}dB  SSIM={m['ssim']:.4f}")
 
     out_root.mkdir(parents=True, exist_ok=True)
     with open(out_root / "results.json", "w") as f:
         json.dump(all_results, f, indent=2)
-    print(f"\nsaved qualitative strips (bilinear | traditional ISP | ML | ground truth) "
-          f"and results.json under {out_root}")
+    print(f"\nsaved qualitative strips (bilinear | classical demosaic+denoise | "
+          f"traditional ISP full | ML | ground truth) and results.json under {out_root}")
 
 
 if __name__ == "__main__":
