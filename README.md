@@ -36,6 +36,8 @@ synthetic training data is realistic.
 
 ## Architecture
 
+![JointISPNet architecture](docs/jointispnet_figure.png)
+
 `neuralisp/models/unet.py`, `JointISPNet`:
 
 - **Input**: packed RGGB Bayer (4ch) plus a broadcast noise-level map
