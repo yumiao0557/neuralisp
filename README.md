@@ -120,6 +120,14 @@ python scripts\download_data.py
 # train
 venv\Scripts\python -m neuralisp.train --epochs 100 --batch-size 16 --patch-size 128
 
+# train with noise sampling biased toward high ISO (see "Noise-distribution
+# experiment" below before reaching for this -- it's not a clean win)
+venv\Scripts\python -m neuralisp.train --epochs 600 --noise-skew-power 0.5 --run-name my_run
+
+# resume an interrupted run -- picks up model/optimizer/LR-schedule state,
+# not just the weights (see the resume-bug note below)
+venv\Scripts\python -m neuralisp.train --epochs 600 --noise-skew-power 0.5 --run-name my_run --resume checkpoints\my_run\latest.pt
+
 # evaluate a checkpoint, low/mid/high-ISO, on Kodak and CBSD68
 venv\Scripts\python -m neuralisp.evaluate --checkpoint checkpoints\<run>\best.pt --dataset data_raw\test\kodak
 venv\Scripts\python -m neuralisp.evaluate --checkpoint checkpoints\<run>\best.pt --dataset data_raw\test\cbsd68
@@ -129,7 +137,9 @@ venv\Scripts\tensorboard --logdir runs
 ```
 
 `train.py --max-steps N --limit-val M` runs a fast smoke test instead of a
-full run.
+full run. `--resume` correctly continues the cosine LR schedule rather than
+restarting it -- see "Noise-distribution experiment" below for why that
+needed a fix and how it was verified.
 
 ## Results
 
@@ -149,6 +159,11 @@ The gap grows sharply at high ISO (SSIM 0.79 vs. 0.45-0.48): bilinear is
 heavily noise-corrupted there, the network stays close to ground truth.
 Performance is consistent between Kodak and CBSD68, the generalization
 check that matters since CBSD68 was never used for training or tuning.
+
+These are the numbers for `checkpoints/joint_isp_v1`, still the checkpoint
+referenced everywhere else in this README and in `reference_isp/`. A
+later checkpoint beats these on every regime -- see "Noise-distribution
+experiment" below -- but hasn't been promoted to replace `v1` here yet.
 
 Full numbers: `outputs/eval/<dataset>/results.json`. Qualitative triplets
 (bilinear, prediction, ground truth): `outputs/eval/<dataset>/<regime>/*.png`.
