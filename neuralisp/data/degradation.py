@@ -50,15 +50,28 @@ class NoiseParams:
     read_b: torch.Tensor  # (B,) or scalar
 
 
-def sample_noise_params(batch_size: int, device, gain_range=(-4.0, -1.0)) -> NoiseParams:
+def sample_noise_params(batch_size: int, device, gain_range=(-4.0, -1.0), skew_power: float = 1.0) -> NoiseParams:
     """Sample plausible per-image (shot, read) noise params.
 
     Follows the log-linear shot/read relationship calibrated by Foi et al.
     and reused in Brooks et al.: higher shot noise correlates with higher
     read noise, with some scatter. gain_range is log10(shot_a) range,
     roughly spanning low-ISO to high-ISO operating points.
+
+    skew_power biases sampling toward the high-noise end of gain_range,
+    without a hard cutoff: draw u ~ Uniform(0,1), then use u**skew_power
+    in place of u. skew_power=1.0 (default) is plain uniform, matching
+    prior behavior exactly. skew_power<1.0 pushes u toward 1 (the high-
+    noise end of gain_range), giving high-ISO conditions more training
+    density -- e.g. skew_power=0.5 roughly doubles the probability mass
+    landing in the top 1/6 of the range (~17% -> ~31%). Opt-in only: the
+    default leaves every existing call site (evaluate.py, the reference_isp
+    comparison scripts, which pass fixed per-regime ranges) unaffected.
     """
-    log_a = torch.empty(batch_size, device=device).uniform_(*gain_range) * math.log(10)
+    u = torch.rand(batch_size, device=device)
+    if skew_power != 1.0:
+        u = u**skew_power
+    log_a = (gain_range[0] + (gain_range[1] - gain_range[0]) * u) * math.log(10)
     a = torch.exp(log_a)
     log_b = 2.18 * log_a + 1.20 + torch.randn(batch_size, device=device) * 0.26
     b = torch.exp(log_b) * 1e-3  # scale into [0,1]-normalized intensity units
@@ -162,11 +175,14 @@ class DegradationOutput:
     ccm: torch.Tensor  # (B, 3, 3) cam->sRGB matrix for downstream classical CCM
 
 
-def degrade(clean_srgb: torch.Tensor, gain_range=(-4.0, -1.0)) -> DegradationOutput:
+def degrade(clean_srgb: torch.Tensor, gain_range=(-4.0, -1.0), noise_skew_power: float = 1.0) -> DegradationOutput:
     """Full forward degradation: clean sRGB (B,3,H,W) in [0,1] -> synthetic RAW.
 
     Returns everything the network needs as input/target, plus the WB/CCM
     parameters a classical post-stage would apply (kept separate, tunable).
+
+    noise_skew_power: see sample_noise_params(). Default 1.0 (plain
+    uniform) leaves every existing caller's behavior unchanged.
     """
     device = clean_srgb.device
     b = clean_srgb.shape[0]
@@ -182,7 +198,7 @@ def degrade(clean_srgb: torch.Tensor, gain_range=(-4.0, -1.0)) -> DegradationOut
     cam_linear_noWB = cam_linear_noWB.clamp(0.0, 1.0)
 
     bayer_clean = mosaic_rggb(cam_linear_noWB)
-    noise = sample_noise_params(b, device, gain_range=gain_range)
+    noise = sample_noise_params(b, device, gain_range=gain_range, skew_power=noise_skew_power)
     bayer_noisy = add_shot_read_noise(bayer_clean, noise).clamp(0.0, 1.0)
 
     # simulate ADC quantization (~12-bit)

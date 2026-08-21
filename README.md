@@ -157,6 +157,58 @@ Full numbers: `outputs/eval/<dataset>/results.json`. Qualitative triplets
 project's own forward model. Not a substitute for real-sensor validation,
 texture metrics, or a human panel. See "What's missing for production."
 
+## Noise-distribution experiment: is the high-ISO gap fixable by training?
+
+The results above show the network losing more ground at high ISO than at
+low ISO. One hypothesis: `TrainConfig.noise_gain_range=(-4,-1)` samples
+noise uniformly, but the `high_iso` eval regime `(-1.5,-1.0)` only gets
+~17% of training gradient mass -- undertrained, not fundamentally hard.
+Tested in two stages, both using `noise_skew_power` in
+`sample_noise_params()` (`degradation.py`) to bias sampling toward the
+high-noise end of the range:
+
+**v2** (100 epochs, same total budget as the original run, skew=0.5):
+reallocated density from low noise to high noise within a *fixed* budget
+-- a zero-sum trade. Result: high ISO gained only +0.14-0.16dB, low ISO
+lost -1.35 to -1.43dB. Net negative. Suggested the high-ISO gap was closer
+to an information ceiling than an undertraining problem.
+
+**v3** (600 epochs -- 6x the budget, same skew): instead of reallocating a
+fixed budget, grew the budget so the low-noise band's *absolute* exposure
+returned to roughly what the original run had (~67,000 draws), while the
+high-noise band's absolute exposure grew far beyond even v2's (~740,000
+draws, ~11x the original, vs. v2's ~123,000).
+
+| Dataset | Regime | v1 (100ep, uniform) | v2 (100ep, skewed) | v3 (600ep, skewed) |
+|---|---|---|---|---|
+| Kodak | low ISO | 42.67 / 0.9888 | 41.32 / 0.9856 | **43.33 / 0.9897** |
+| Kodak | mid ISO | 38.69 / 0.9662 | 38.34 / 0.9654 | **39.33 / 0.9694** |
+| Kodak | high ISO | 29.93 / 0.7867 | 30.09 / 0.7914 | **31.37 / 0.8615** |
+| CBSD68 | low ISO | 42.26 / 0.9905 | 40.83 / 0.9873 | **42.72 / 0.9912** |
+| CBSD68 | mid ISO | 37.96 / 0.9692 | 37.60 / 0.9682 | **38.51 / 0.9720** |
+| CBSD68 | high ISO | 28.97 / 0.7891 | 29.11 / 0.7930 | **30.17 / 0.8522** |
+
+(PSNR dB / SSIM). `v3` beats the original run on every regime, every
+dataset -- including low ISO, which the skew was specifically designed to
+leave *unchanged*, not improve. High ISO's SSIM jump is the largest (0.79
+-> 0.86 on Kodak) -- a real structural improvement, not just a PSNR nudge.
+
+**Honest caveat this result needs**: `v3` changes two things at once
+relative to the original run -- 6x more total training, *and* the noise
+skew. Since low ISO improved too, something the skew wasn't meant to
+touch, some or much of this gain may be "more total training helps
+everything" rather than specifically "fixing the undertraining." A clean
+ablation -- 600 epochs, *uniform* sampling, no skew -- would isolate how
+much is the skew versus just training longer. Not run yet; the natural
+next experiment before trusting the mechanism over the raw result.
+
+Checkpoint: `checkpoints/joint_isp_v3_longskew/best.pt`. This is currently
+the best-performing checkpoint in the project by every measured regime,
+but it has not been adopted as the default referenced elsewhere in this
+README or in `reference_isp/`'s comparisons -- promoting it is a bigger
+decision (re-running every downstream comparison against a new baseline)
+left for deliberate follow-up, not made unilaterally here.
+
 ## The retraining problem
 
 A classical ISP has parameters you nudge and rebuild in an afternoon. This

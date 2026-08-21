@@ -1,0 +1,1204 @@
+﻿model params: 8.60M
+train patches: 4016 | val images: 24 | device: cuda
+noise_gain_range: (-4.0, -1.0) | noise_skew_power: 0.5
+epoch 0: loss=0.0965 (251 batches, 15.0s)
+  val: pred_psnr=29.20dB pred_ssim=0.7487 bilinear_baseline_psnr=28.90dB
+epoch 1: loss=0.0761 (251 batches, 15.1s)
+  val: pred_psnr=30.12dB pred_ssim=0.8030 bilinear_baseline_psnr=28.90dB
+epoch 2: loss=0.0672 (251 batches, 14.4s)
+  val: pred_psnr=30.59dB pred_ssim=0.8205 bilinear_baseline_psnr=28.90dB
+epoch 3: loss=0.0633 (251 batches, 14.4s)
+  val: pred_psnr=30.88dB pred_ssim=0.8359 bilinear_baseline_psnr=28.90dB
+epoch 4: loss=0.0597 (251 batches, 14.4s)
+  val: pred_psnr=31.00dB pred_ssim=0.8474 bilinear_baseline_psnr=28.90dB
+epoch 5: loss=0.0568 (251 batches, 14.4s)
+  val: pred_psnr=31.48dB pred_ssim=0.8601 bilinear_baseline_psnr=28.90dB
+epoch 6: loss=0.0547 (251 batches, 14.4s)
+  val: pred_psnr=31.77dB pred_ssim=0.8652 bilinear_baseline_psnr=28.90dB
+epoch 7: loss=0.0538 (251 batches, 14.4s)
+  val: pred_psnr=32.13dB pred_ssim=0.8723 bilinear_baseline_psnr=28.90dB
+epoch 8: loss=0.0526 (251 batches, 14.2s)
+  val: pred_psnr=32.37dB pred_ssim=0.8773 bilinear_baseline_psnr=28.90dB
+epoch 9: loss=0.0515 (251 batches, 14.5s)
+  val: pred_psnr=32.58dB pred_ssim=0.8779 bilinear_baseline_psnr=28.90dB
+epoch 10: loss=0.0513 (251 batches, 14.3s)
+  val: pred_psnr=32.66dB pred_ssim=0.8804 bilinear_baseline_psnr=28.90dB
+epoch 11: loss=0.0503 (251 batches, 16.5s)
+  val: pred_psnr=32.88dB pred_ssim=0.8833 bilinear_baseline_psnr=28.90dB
+epoch 12: loss=0.0497 (251 batches, 14.6s)
+  val: pred_psnr=33.00dB pred_ssim=0.8841 bilinear_baseline_psnr=28.90dB
+epoch 13: loss=0.0493 (251 batches, 14.6s)
+  val: pred_psnr=33.14dB pred_ssim=0.8879 bilinear_baseline_psnr=28.90dB
+epoch 14: loss=0.0490 (251 batches, 14.5s)
+  val: pred_psnr=33.25dB pred_ssim=0.8887 bilinear_baseline_psnr=28.90dB
+epoch 15: loss=0.0485 (251 batches, 14.5s)
+  val: pred_psnr=33.28dB pred_ssim=0.8889 bilinear_baseline_psnr=28.90dB
+epoch 16: loss=0.0483 (251 batches, 14.4s)
+  val: pred_psnr=33.42dB pred_ssim=0.8874 bilinear_baseline_psnr=28.90dB
+epoch 17: loss=0.0474 (251 batches, 14.3s)
+  val: pred_psnr=33.52dB pred_ssim=0.8929 bilinear_baseline_psnr=28.90dB
+epoch 18: loss=0.0482 (251 batches, 14.1s)
+  val: pred_psnr=33.68dB pred_ssim=0.8925 bilinear_baseline_psnr=28.90dB
+epoch 19: loss=0.0471 (251 batches, 14.1s)
+  val: pred_psnr=33.75dB pred_ssim=0.8936 bilinear_baseline_psnr=28.90dB
+epoch 20: loss=0.0471 (251 batches, 14.2s)
+  val: pred_psnr=33.84dB pred_ssim=0.8945 bilinear_baseline_psnr=28.90dB
+epoch 21: loss=0.0470 (251 batches, 14.3s)
+  val: pred_psnr=33.68dB pred_ssim=0.8903 bilinear_baseline_psnr=28.90dB
+epoch 22: loss=0.0465 (251 batches, 14.2s)
+  val: pred_psnr=33.97dB pred_ssim=0.8943 bilinear_baseline_psnr=28.90dB
+epoch 23: loss=0.0466 (251 batches, 14.2s)
+  val: pred_psnr=34.00dB pred_ssim=0.8957 bilinear_baseline_psnr=28.90dB
+epoch 24: loss=0.0465 (251 batches, 14.4s)
+  val: pred_psnr=34.12dB pred_ssim=0.8969 bilinear_baseline_psnr=28.90dB
+epoch 25: loss=0.0464 (251 batches, 14.6s)
+  val: pred_psnr=34.10dB pred_ssim=0.8966 bilinear_baseline_psnr=28.90dB
+epoch 26: loss=0.0460 (251 batches, 14.5s)
+  val: pred_psnr=34.21dB pred_ssim=0.8967 bilinear_baseline_psnr=28.90dB
+epoch 27: loss=0.0459 (251 batches, 14.2s)
+  val: pred_psnr=34.24dB pred_ssim=0.8974 bilinear_baseline_psnr=28.90dB
+epoch 28: loss=0.0458 (251 batches, 14.3s)
+  val: pred_psnr=34.19dB pred_ssim=0.8969 bilinear_baseline_psnr=28.90dB
+epoch 29: loss=0.0456 (251 batches, 14.1s)
+  val: pred_psnr=34.35dB pred_ssim=0.8991 bilinear_baseline_psnr=28.90dB
+epoch 30: loss=0.0455 (251 batches, 13.8s)
+  val: pred_psnr=34.34dB pred_ssim=0.8984 bilinear_baseline_psnr=28.90dB
+epoch 31: loss=0.0455 (251 batches, 13.8s)
+  val: pred_psnr=34.44dB pred_ssim=0.9000 bilinear_baseline_psnr=28.90dB
+epoch 32: loss=0.0447 (251 batches, 14.5s)
+  val: pred_psnr=34.48dB pred_ssim=0.9000 bilinear_baseline_psnr=28.90dB
+epoch 33: loss=0.0452 (251 batches, 28.2s)
+  val: pred_psnr=34.39dB pred_ssim=0.8977 bilinear_baseline_psnr=28.90dB
+epoch 34: loss=0.0446 (251 batches, 29.1s)
+  val: pred_psnr=34.58dB pred_ssim=0.9008 bilinear_baseline_psnr=28.90dB
+epoch 35: loss=0.0445 (251 batches, 28.3s)
+  val: pred_psnr=34.43dB pred_ssim=0.8987 bilinear_baseline_psnr=28.90dB
+epoch 36: loss=0.0446 (251 batches, 27.1s)
+  val: pred_psnr=34.57dB pred_ssim=0.8985 bilinear_baseline_psnr=28.90dB
+epoch 37: loss=0.0449 (251 batches, 29.5s)
+  val: pred_psnr=34.61dB pred_ssim=0.9008 bilinear_baseline_psnr=28.90dB
+epoch 38: loss=0.0445 (251 batches, 28.5s)
+  val: pred_psnr=34.74dB pred_ssim=0.9027 bilinear_baseline_psnr=28.90dB
+epoch 39: loss=0.0445 (251 batches, 29.8s)
+  val: pred_psnr=34.64dB pred_ssim=0.9027 bilinear_baseline_psnr=28.90dB
+epoch 40: loss=0.0441 (251 batches, 29.3s)
+  val: pred_psnr=34.71dB pred_ssim=0.9026 bilinear_baseline_psnr=28.90dB
+epoch 41: loss=0.0439 (251 batches, 23.0s)
+  val: pred_psnr=34.69dB pred_ssim=0.9030 bilinear_baseline_psnr=28.90dB
+epoch 42: loss=0.0440 (251 batches, 26.9s)
+  val: pred_psnr=34.77dB pred_ssim=0.9024 bilinear_baseline_psnr=28.90dB
+epoch 43: loss=0.0440 (251 batches, 27.8s)
+  val: pred_psnr=34.81dB pred_ssim=0.9039 bilinear_baseline_psnr=28.90dB
+epoch 44: loss=0.0439 (251 batches, 27.2s)
+  val: pred_psnr=34.84dB pred_ssim=0.9027 bilinear_baseline_psnr=28.90dB
+epoch 45: loss=0.0437 (251 batches, 29.0s)
+  val: pred_psnr=34.73dB pred_ssim=0.9020 bilinear_baseline_psnr=28.90dB
+epoch 46: loss=0.0440 (251 batches, 29.9s)
+  val: pred_psnr=34.72dB pred_ssim=0.9007 bilinear_baseline_psnr=28.90dB
+epoch 47: loss=0.0436 (251 batches, 29.0s)
+  val: pred_psnr=34.79dB pred_ssim=0.9028 bilinear_baseline_psnr=28.90dB
+epoch 48: loss=0.0439 (251 batches, 28.4s)
+  val: pred_psnr=34.80dB pred_ssim=0.9025 bilinear_baseline_psnr=28.90dB
+epoch 49: loss=0.0433 (251 batches, 28.4s)
+  val: pred_psnr=34.99dB pred_ssim=0.9056 bilinear_baseline_psnr=28.90dB
+epoch 50: loss=0.0434 (251 batches, 28.8s)
+  val: pred_psnr=34.83dB pred_ssim=0.9040 bilinear_baseline_psnr=28.90dB
+epoch 51: loss=0.0430 (251 batches, 30.2s)
+  val: pred_psnr=34.88dB pred_ssim=0.9012 bilinear_baseline_psnr=28.90dB
+epoch 52: loss=0.0434 (251 batches, 30.0s)
+  val: pred_psnr=34.96dB pred_ssim=0.9042 bilinear_baseline_psnr=28.90dB
+epoch 53: loss=0.0438 (251 batches, 29.4s)
+  val: pred_psnr=35.02dB pred_ssim=0.9052 bilinear_baseline_psnr=28.90dB
+epoch 54: loss=0.0431 (251 batches, 28.8s)
+  val: pred_psnr=35.06dB pred_ssim=0.9063 bilinear_baseline_psnr=28.90dB
+epoch 55: loss=0.0427 (251 batches, 28.6s)
+  val: pred_psnr=35.02dB pred_ssim=0.9057 bilinear_baseline_psnr=28.90dB
+epoch 56: loss=0.0430 (251 batches, 28.8s)
+  val: pred_psnr=35.05dB pred_ssim=0.9060 bilinear_baseline_psnr=28.90dB
+epoch 57: loss=0.0428 (251 batches, 30.3s)
+  val: pred_psnr=35.06dB pred_ssim=0.9056 bilinear_baseline_psnr=28.90dB
+epoch 58: loss=0.0430 (251 batches, 30.0s)
+  val: pred_psnr=35.04dB pred_ssim=0.9066 bilinear_baseline_psnr=28.90dB
+epoch 59: loss=0.0427 (251 batches, 28.7s)
+  val: pred_psnr=35.10dB pred_ssim=0.9062 bilinear_baseline_psnr=28.90dB
+epoch 60: loss=0.0425 (251 batches, 28.9s)
+  val: pred_psnr=35.15dB pred_ssim=0.9077 bilinear_baseline_psnr=28.90dB
+epoch 61: loss=0.0428 (251 batches, 28.3s)
+  val: pred_psnr=35.17dB pred_ssim=0.9071 bilinear_baseline_psnr=28.90dB
+epoch 62: loss=0.0424 (251 batches, 28.3s)
+  val: pred_psnr=35.02dB pred_ssim=0.9057 bilinear_baseline_psnr=28.90dB
+epoch 63: loss=0.0425 (251 batches, 29.7s)
+  val: pred_psnr=35.12dB pred_ssim=0.9061 bilinear_baseline_psnr=28.90dB
+epoch 64: loss=0.0423 (251 batches, 25.0s)
+  val: pred_psnr=35.10dB pred_ssim=0.9078 bilinear_baseline_psnr=28.90dB
+epoch 65: loss=0.0424 (251 batches, 27.6s)
+  val: pred_psnr=35.15dB pred_ssim=0.9076 bilinear_baseline_psnr=28.90dB
+epoch 66: loss=0.0425 (251 batches, 29.6s)
+  val: pred_psnr=35.12dB pred_ssim=0.9060 bilinear_baseline_psnr=28.90dB
+epoch 67: loss=0.0422 (251 batches, 29.3s)
+  val: pred_psnr=35.17dB pred_ssim=0.9060 bilinear_baseline_psnr=28.90dB
+epoch 68: loss=0.0419 (251 batches, 29.6s)
+  val: pred_psnr=35.21dB pred_ssim=0.9084 bilinear_baseline_psnr=28.90dB
+epoch 69: loss=0.0422 (251 batches, 30.8s)
+  val: pred_psnr=35.19dB pred_ssim=0.9085 bilinear_baseline_psnr=28.90dB
+epoch 70: loss=0.0423 (251 batches, 29.7s)
+  val: pred_psnr=35.22dB pred_ssim=0.9072 bilinear_baseline_psnr=28.90dB
+epoch 71: loss=0.0419 (251 batches, 29.4s)
+  val: pred_psnr=35.02dB pred_ssim=0.9073 bilinear_baseline_psnr=28.90dB
+epoch 72: loss=0.0421 (251 batches, 29.1s)
+  val: pred_psnr=35.25dB pred_ssim=0.9084 bilinear_baseline_psnr=28.90dB
+epoch 73: loss=0.0419 (251 batches, 28.7s)
+  val: pred_psnr=35.18dB pred_ssim=0.9072 bilinear_baseline_psnr=28.90dB
+epoch 74: loss=0.0418 (251 batches, 27.8s)
+  val: pred_psnr=35.32dB pred_ssim=0.9085 bilinear_baseline_psnr=28.90dB
+epoch 75: loss=0.0420 (251 batches, 29.7s)
+  val: pred_psnr=35.28dB pred_ssim=0.9097 bilinear_baseline_psnr=28.90dB
+epoch 76: loss=0.0420 (251 batches, 29.8s)
+  val: pred_psnr=35.32dB pred_ssim=0.9090 bilinear_baseline_psnr=28.90dB
+epoch 77: loss=0.0417 (251 batches, 29.5s)
+  val: pred_psnr=35.25dB pred_ssim=0.9082 bilinear_baseline_psnr=28.90dB
+epoch 78: loss=0.0417 (251 batches, 30.0s)
+  val: pred_psnr=35.36dB pred_ssim=0.9095 bilinear_baseline_psnr=28.90dB
+epoch 79: loss=0.0417 (251 batches, 28.4s)
+  val: pred_psnr=35.29dB pred_ssim=0.9092 bilinear_baseline_psnr=28.90dB
+epoch 80: loss=0.0418 (251 batches, 29.2s)
+  val: pred_psnr=35.34dB pred_ssim=0.9089 bilinear_baseline_psnr=28.90dB
+epoch 81: loss=0.0416 (251 batches, 30.0s)
+  val: pred_psnr=35.27dB pred_ssim=0.9099 bilinear_baseline_psnr=28.90dB
+epoch 82: loss=0.0417 (251 batches, 29.5s)
+  val: pred_psnr=35.19dB pred_ssim=0.9080 bilinear_baseline_psnr=28.90dB
+epoch 83: loss=0.0413 (251 batches, 28.7s)
+  val: pred_psnr=35.35dB pred_ssim=0.9103 bilinear_baseline_psnr=28.90dB
+epoch 84: loss=0.0415 (251 batches, 27.8s)
+  val: pred_psnr=35.38dB pred_ssim=0.9102 bilinear_baseline_psnr=28.90dB
+epoch 85: loss=0.0418 (251 batches, 28.3s)
+  val: pred_psnr=35.30dB pred_ssim=0.9080 bilinear_baseline_psnr=28.90dB
+epoch 86: loss=0.0414 (251 batches, 28.9s)
+  val: pred_psnr=35.45dB pred_ssim=0.9114 bilinear_baseline_psnr=28.90dB
+epoch 87: loss=0.0414 (251 batches, 29.6s)
+  val: pred_psnr=35.37dB pred_ssim=0.9095 bilinear_baseline_psnr=28.90dB
+epoch 88: loss=0.0412 (251 batches, 29.7s)
+  val: pred_psnr=35.41dB pred_ssim=0.9103 bilinear_baseline_psnr=28.90dB
+epoch 89: loss=0.0410 (251 batches, 29.9s)
+  val: pred_psnr=35.44dB pred_ssim=0.9109 bilinear_baseline_psnr=28.90dB
+epoch 90: loss=0.0409 (251 batches, 29.4s)
+  val: pred_psnr=35.32dB pred_ssim=0.9099 bilinear_baseline_psnr=28.90dB
+epoch 91: loss=0.0416 (251 batches, 28.1s)
+  val: pred_psnr=35.46dB pred_ssim=0.9119 bilinear_baseline_psnr=28.90dB
+epoch 92: loss=0.0409 (251 batches, 29.1s)
+  val: pred_psnr=35.43dB pred_ssim=0.9117 bilinear_baseline_psnr=28.90dB
+epoch 93: loss=0.0411 (251 batches, 29.9s)
+  val: pred_psnr=35.50dB pred_ssim=0.9106 bilinear_baseline_psnr=28.90dB
+epoch 94: loss=0.0412 (251 batches, 28.8s)
+  val: pred_psnr=35.40dB pred_ssim=0.9117 bilinear_baseline_psnr=28.90dB
+epoch 95: loss=0.0410 (251 batches, 28.8s)
+  val: pred_psnr=35.51dB pred_ssim=0.9126 bilinear_baseline_psnr=28.90dB
+epoch 96: loss=0.0409 (251 batches, 28.5s)
+  val: pred_psnr=35.41dB pred_ssim=0.9111 bilinear_baseline_psnr=28.90dB
+epoch 97: loss=0.0406 (251 batches, 28.0s)
+  val: pred_psnr=35.44dB pred_ssim=0.9120 bilinear_baseline_psnr=28.90dB
+epoch 98: loss=0.0407 (251 batches, 29.1s)
+  val: pred_psnr=35.39dB pred_ssim=0.9095 bilinear_baseline_psnr=28.90dB
+epoch 99: loss=0.0410 (251 batches, 27.6s)
+  val: pred_psnr=35.53dB pred_ssim=0.9127 bilinear_baseline_psnr=28.90dB
+epoch 100: loss=0.0407 (251 batches, 28.2s)
+  val: pred_psnr=35.51dB pred_ssim=0.9129 bilinear_baseline_psnr=28.90dB
+epoch 101: loss=0.0407 (251 batches, 28.6s)
+  val: pred_psnr=35.35dB pred_ssim=0.9113 bilinear_baseline_psnr=28.90dB
+epoch 102: loss=0.0407 (251 batches, 29.5s)
+  val: pred_psnr=35.46dB pred_ssim=0.9135 bilinear_baseline_psnr=28.90dB
+epoch 103: loss=0.0404 (251 batches, 15.5s)
+  val: pred_psnr=35.60dB pred_ssim=0.9136 bilinear_baseline_psnr=28.90dB
+epoch 104: loss=0.0403 (251 batches, 13.8s)
+  val: pred_psnr=35.53dB pred_ssim=0.9132 bilinear_baseline_psnr=28.90dB
+epoch 105: loss=0.0403 (251 batches, 13.8s)
+  val: pred_psnr=35.46dB pred_ssim=0.9118 bilinear_baseline_psnr=28.90dB
+epoch 106: loss=0.0399 (251 batches, 13.8s)
+  val: pred_psnr=35.50dB pred_ssim=0.9124 bilinear_baseline_psnr=28.90dB
+epoch 107: loss=0.0406 (251 batches, 13.9s)
+  val: pred_psnr=35.49dB pred_ssim=0.9128 bilinear_baseline_psnr=28.90dB
+epoch 108: loss=0.0404 (251 batches, 13.9s)
+  val: pred_psnr=35.48dB pred_ssim=0.9138 bilinear_baseline_psnr=28.90dB
+epoch 109: loss=0.0404 (251 batches, 13.8s)
+  val: pred_psnr=35.61dB pred_ssim=0.9140 bilinear_baseline_psnr=28.90dB
+epoch 110: loss=0.0402 (251 batches, 14.2s)
+  val: pred_psnr=35.57dB pred_ssim=0.9135 bilinear_baseline_psnr=28.90dB
+epoch 111: loss=0.0404 (251 batches, 14.3s)
+  val: pred_psnr=35.58dB pred_ssim=0.9135 bilinear_baseline_psnr=28.90dB
+epoch 112: loss=0.0401 (251 batches, 14.3s)
+  val: pred_psnr=35.60dB pred_ssim=0.9141 bilinear_baseline_psnr=28.90dB
+epoch 113: loss=0.0398 (251 batches, 14.2s)
+  val: pred_psnr=35.49dB pred_ssim=0.9144 bilinear_baseline_psnr=28.90dB
+epoch 114: loss=0.0399 (251 batches, 14.2s)
+  val: pred_psnr=35.66dB pred_ssim=0.9145 bilinear_baseline_psnr=28.90dB
+epoch 115: loss=0.0396 (251 batches, 14.1s)
+  val: pred_psnr=35.49dB pred_ssim=0.9115 bilinear_baseline_psnr=28.90dB
+epoch 116: loss=0.0399 (251 batches, 13.8s)
+  val: pred_psnr=35.52dB pred_ssim=0.9125 bilinear_baseline_psnr=28.90dB
+epoch 117: loss=0.0400 (251 batches, 13.8s)
+  val: pred_psnr=35.28dB pred_ssim=0.9113 bilinear_baseline_psnr=28.90dB
+epoch 118: loss=0.0397 (251 batches, 14.0s)
+  val: pred_psnr=35.61dB pred_ssim=0.9156 bilinear_baseline_psnr=28.90dB
+epoch 119: loss=0.0400 (251 batches, 14.1s)
+  val: pred_psnr=35.65dB pred_ssim=0.9151 bilinear_baseline_psnr=28.90dB
+epoch 120: loss=0.0394 (251 batches, 13.9s)
+  val: pred_psnr=35.65dB pred_ssim=0.9152 bilinear_baseline_psnr=28.90dB
+epoch 121: loss=0.0397 (251 batches, 13.9s)
+  val: pred_psnr=35.60dB pred_ssim=0.9150 bilinear_baseline_psnr=28.90dB
+epoch 122: loss=0.0395 (251 batches, 14.0s)
+  val: pred_psnr=35.66dB pred_ssim=0.9144 bilinear_baseline_psnr=28.90dB
+epoch 123: loss=0.0394 (251 batches, 13.9s)
+  val: pred_psnr=35.55dB pred_ssim=0.9133 bilinear_baseline_psnr=28.90dB
+epoch 124: loss=0.0396 (251 batches, 13.8s)
+  val: pred_psnr=35.65dB pred_ssim=0.9157 bilinear_baseline_psnr=28.90dB
+epoch 125: loss=0.0395 (251 batches, 13.8s)
+  val: pred_psnr=35.68dB pred_ssim=0.9162 bilinear_baseline_psnr=28.90dB
+epoch 126: loss=0.0398 (251 batches, 13.9s)
+  val: pred_psnr=35.58dB pred_ssim=0.9148 bilinear_baseline_psnr=28.90dB
+epoch 127: loss=0.0398 (251 batches, 14.0s)
+  val: pred_psnr=35.72dB pred_ssim=0.9164 bilinear_baseline_psnr=28.90dB
+epoch 128: loss=0.0395 (251 batches, 14.0s)
+  val: pred_psnr=35.63dB pred_ssim=0.9156 bilinear_baseline_psnr=28.90dB
+epoch 129: loss=0.0392 (251 batches, 13.8s)
+  val: pred_psnr=35.63dB pred_ssim=0.9162 bilinear_baseline_psnr=28.90dB
+epoch 130: loss=0.0389 (251 batches, 13.8s)
+  val: pred_psnr=35.63dB pred_ssim=0.9170 bilinear_baseline_psnr=28.90dB
+epoch 131: loss=0.0394 (251 batches, 13.8s)
+  val: pred_psnr=35.59dB pred_ssim=0.9154 bilinear_baseline_psnr=28.90dB
+epoch 132: loss=0.0395 (251 batches, 25.9s)
+  val: pred_psnr=35.75dB pred_ssim=0.9179 bilinear_baseline_psnr=28.90dB
+epoch 133: loss=0.0391 (251 batches, 28.0s)
+  val: pred_psnr=35.68dB pred_ssim=0.9171 bilinear_baseline_psnr=28.90dB
+epoch 134: loss=0.0392 (251 batches, 25.9s)
+  val: pred_psnr=35.66dB pred_ssim=0.9158 bilinear_baseline_psnr=28.90dB
+epoch 135: loss=0.0389 (251 batches, 27.0s)
+  val: pred_psnr=35.76dB pred_ssim=0.9175 bilinear_baseline_psnr=28.90dB
+epoch 136: loss=0.0393 (251 batches, 27.5s)
+  val: pred_psnr=35.69dB pred_ssim=0.9159 bilinear_baseline_psnr=28.90dB
+epoch 137: loss=0.0392 (251 batches, 27.4s)
+  val: pred_psnr=35.70dB pred_ssim=0.9177 bilinear_baseline_psnr=28.90dB
+epoch 138: loss=0.0389 (251 batches, 28.1s)
+  val: pred_psnr=35.68dB pred_ssim=0.9173 bilinear_baseline_psnr=28.90dB
+epoch 139: loss=0.0386 (251 batches, 27.4s)
+  val: pred_psnr=35.64dB pred_ssim=0.9174 bilinear_baseline_psnr=28.90dB
+epoch 140: loss=0.0387 (251 batches, 27.5s)
+  val: pred_psnr=35.72dB pred_ssim=0.9173 bilinear_baseline_psnr=28.90dB
+epoch 141: loss=0.0388 (251 batches, 28.0s)
+  val: pred_psnr=35.74dB pred_ssim=0.9181 bilinear_baseline_psnr=28.90dB
+epoch 142: loss=0.0387 (251 batches, 27.0s)
+  val: pred_psnr=35.71dB pred_ssim=0.9182 bilinear_baseline_psnr=28.90dB
+epoch 143: loss=0.0385 (251 batches, 24.0s)
+  val: pred_psnr=35.66dB pred_ssim=0.9176 bilinear_baseline_psnr=28.90dB
+epoch 144: loss=0.0382 (251 batches, 26.9s)
+  val: pred_psnr=35.77dB pred_ssim=0.9188 bilinear_baseline_psnr=28.90dB
+epoch 145: loss=0.0386 (251 batches, 28.3s)
+  val: pred_psnr=35.74dB pred_ssim=0.9186 bilinear_baseline_psnr=28.90dB
+epoch 146: loss=0.0385 (251 batches, 27.2s)
+  val: pred_psnr=35.67dB pred_ssim=0.9179 bilinear_baseline_psnr=28.90dB
+epoch 147: loss=0.0385 (251 batches, 26.0s)
+  val: pred_psnr=35.74dB pred_ssim=0.9187 bilinear_baseline_psnr=28.90dB
+epoch 148: loss=0.0386 (251 batches, 27.2s)
+  val: pred_psnr=35.70dB pred_ssim=0.9177 bilinear_baseline_psnr=28.90dB
+epoch 149: loss=0.0383 (251 batches, 23.2s)
+  val: pred_psnr=35.75dB pred_ssim=0.9184 bilinear_baseline_psnr=28.90dB
+epoch 150: loss=0.0382 (251 batches, 26.3s)
+  val: pred_psnr=35.68dB pred_ssim=0.9175 bilinear_baseline_psnr=28.90dB
+epoch 151: loss=0.0382 (251 batches, 26.8s)
+  val: pred_psnr=35.83dB pred_ssim=0.9203 bilinear_baseline_psnr=28.90dB
+epoch 152: loss=0.0383 (251 batches, 27.8s)
+  val: pred_psnr=35.75dB pred_ssim=0.9183 bilinear_baseline_psnr=28.90dB
+epoch 153: loss=0.0381 (251 batches, 27.4s)
+  val: pred_psnr=35.72dB pred_ssim=0.9181 bilinear_baseline_psnr=28.90dB
+epoch 154: loss=0.0383 (251 batches, 28.3s)
+  val: pred_psnr=35.77dB pred_ssim=0.9176 bilinear_baseline_psnr=28.90dB
+epoch 155: loss=0.0382 (251 batches, 26.5s)
+  val: pred_psnr=35.83dB pred_ssim=0.9199 bilinear_baseline_psnr=28.90dB
+epoch 156: loss=0.0381 (251 batches, 26.6s)
+  val: pred_psnr=35.77dB pred_ssim=0.9201 bilinear_baseline_psnr=28.90dB
+epoch 157: loss=0.0380 (251 batches, 26.8s)
+  val: pred_psnr=35.72dB pred_ssim=0.9167 bilinear_baseline_psnr=28.90dB
+epoch 158: loss=0.0381 (251 batches, 24.1s)
+  val: pred_psnr=35.82dB pred_ssim=0.9203 bilinear_baseline_psnr=28.90dB
+epoch 159: loss=0.0376 (251 batches, 26.1s)
+  val: pred_psnr=35.86dB pred_ssim=0.9210 bilinear_baseline_psnr=28.90dB
+epoch 160: loss=0.0381 (251 batches, 25.6s)
+  val: pred_psnr=35.79dB pred_ssim=0.9209 bilinear_baseline_psnr=28.90dB
+epoch 161: loss=0.0377 (251 batches, 23.7s)
+  val: pred_psnr=35.78dB pred_ssim=0.9200 bilinear_baseline_psnr=28.90dB
+epoch 162: loss=0.0375 (251 batches, 25.7s)
+  val: pred_psnr=35.81dB pred_ssim=0.9199 bilinear_baseline_psnr=28.90dB
+epoch 163: loss=0.0378 (251 batches, 26.1s)
+  val: pred_psnr=35.79dB pred_ssim=0.9194 bilinear_baseline_psnr=28.90dB
+epoch 164: loss=0.0376 (251 batches, 27.2s)
+  val: pred_psnr=35.80dB pred_ssim=0.9200 bilinear_baseline_psnr=28.90dB
+epoch 165: loss=0.0375 (251 batches, 26.2s)
+  val: pred_psnr=35.81dB pred_ssim=0.9211 bilinear_baseline_psnr=28.90dB
+epoch 166: loss=0.0378 (251 batches, 28.3s)
+  val: pred_psnr=35.82dB pred_ssim=0.9209 bilinear_baseline_psnr=28.90dB
+epoch 167: loss=0.0375 (251 batches, 28.1s)
+  val: pred_psnr=35.84dB pred_ssim=0.9222 bilinear_baseline_psnr=28.90dB
+epoch 168: loss=0.0377 (251 batches, 28.4s)
+  val: pred_psnr=35.83dB pred_ssim=0.9208 bilinear_baseline_psnr=28.90dB
+epoch 169: loss=0.0375 (251 batches, 27.1s)
+  val: pred_psnr=35.86dB pred_ssim=0.9213 bilinear_baseline_psnr=28.90dB
+epoch 170: loss=0.0374 (251 batches, 27.1s)
+  val: pred_psnr=35.80dB pred_ssim=0.9215 bilinear_baseline_psnr=28.90dB
+epoch 171: loss=0.0374 (251 batches, 27.3s)
+  val: pred_psnr=35.82dB pred_ssim=0.9201 bilinear_baseline_psnr=28.90dB
+epoch 172: loss=0.0372 (251 batches, 20.3s)
+  val: pred_psnr=35.87dB pred_ssim=0.9204 bilinear_baseline_psnr=28.90dB
+epoch 173: loss=0.0375 (251 batches, 15.1s)
+  val: pred_psnr=35.84dB pred_ssim=0.9222 bilinear_baseline_psnr=28.90dB
+epoch 174: loss=0.0374 (251 batches, 14.2s)
+  val: pred_psnr=35.92dB pred_ssim=0.9220 bilinear_baseline_psnr=28.90dB
+epoch 175: loss=0.0372 (251 batches, 14.5s)
+  val: pred_psnr=35.79dB pred_ssim=0.9206 bilinear_baseline_psnr=28.90dB
+epoch 176: loss=0.0367 (251 batches, 14.3s)
+  val: pred_psnr=35.81dB pred_ssim=0.9215 bilinear_baseline_psnr=28.90dB
+epoch 177: loss=0.0373 (251 batches, 14.3s)
+  val: pred_psnr=35.89dB pred_ssim=0.9223 bilinear_baseline_psnr=28.90dB
+epoch 178: loss=0.0368 (251 batches, 13.9s)
+  val: pred_psnr=35.80dB pred_ssim=0.9220 bilinear_baseline_psnr=28.90dB
+epoch 179: loss=0.0371 (251 batches, 13.8s)
+  val: pred_psnr=35.84dB pred_ssim=0.9216 bilinear_baseline_psnr=28.90dB
+epoch 180: loss=0.0373 (251 batches, 13.9s)
+  val: pred_psnr=35.83dB pred_ssim=0.9224 bilinear_baseline_psnr=28.90dB
+epoch 181: loss=0.0368 (251 batches, 14.0s)
+  val: pred_psnr=35.90dB pred_ssim=0.9223 bilinear_baseline_psnr=28.90dB
+epoch 182: loss=0.0371 (251 batches, 13.9s)
+  val: pred_psnr=35.89dB pred_ssim=0.9227 bilinear_baseline_psnr=28.90dB
+epoch 183: loss=0.0369 (251 batches, 13.8s)
+  val: pred_psnr=35.94dB pred_ssim=0.9232 bilinear_baseline_psnr=28.90dB
+epoch 184: loss=0.0370 (251 batches, 13.8s)
+  val: pred_psnr=35.79dB pred_ssim=0.9217 bilinear_baseline_psnr=28.90dB
+epoch 185: loss=0.0365 (251 batches, 13.9s)
+  val: pred_psnr=35.90dB pred_ssim=0.9231 bilinear_baseline_psnr=28.90dB
+epoch 186: loss=0.0371 (251 batches, 13.8s)
+  val: pred_psnr=35.80dB pred_ssim=0.9201 bilinear_baseline_psnr=28.90dB
+epoch 187: loss=0.0365 (251 batches, 13.8s)
+  val: pred_psnr=35.89dB pred_ssim=0.9234 bilinear_baseline_psnr=28.90dB
+epoch 188: loss=0.0366 (251 batches, 13.8s)
+  val: pred_psnr=35.92dB pred_ssim=0.9228 bilinear_baseline_psnr=28.90dB
+epoch 189: loss=0.0366 (251 batches, 14.1s)
+  val: pred_psnr=35.90dB pred_ssim=0.9233 bilinear_baseline_psnr=28.90dB
+epoch 190: loss=0.0369 (251 batches, 14.0s)
+  val: pred_psnr=35.89dB pred_ssim=0.9236 bilinear_baseline_psnr=28.90dB
+epoch 191: loss=0.0366 (251 batches, 13.8s)
+  val: pred_psnr=35.94dB pred_ssim=0.9242 bilinear_baseline_psnr=28.90dB
+epoch 192: loss=0.0362 (251 batches, 13.8s)
+  val: pred_psnr=35.89dB pred_ssim=0.9227 bilinear_baseline_psnr=28.90dB
+epoch 193: loss=0.0366 (251 batches, 13.8s)
+  val: pred_psnr=35.91dB pred_ssim=0.9231 bilinear_baseline_psnr=28.90dB
+epoch 194: loss=0.0367 (251 batches, 13.8s)
+  val: pred_psnr=35.89dB pred_ssim=0.9238 bilinear_baseline_psnr=28.90dB
+epoch 195: loss=0.0364 (251 batches, 13.7s)
+  val: pred_psnr=35.93dB pred_ssim=0.9228 bilinear_baseline_psnr=28.90dB
+epoch 196: loss=0.0365 (251 batches, 13.7s)
+  val: pred_psnr=35.92dB pred_ssim=0.9234 bilinear_baseline_psnr=28.90dB
+epoch 197: loss=0.0365 (251 batches, 14.2s)
+  val: pred_psnr=35.95dB pred_ssim=0.9242 bilinear_baseline_psnr=28.90dB
+epoch 198: loss=0.0365 (251 batches, 14.3s)
+  val: pred_psnr=35.83dB pred_ssim=0.9234 bilinear_baseline_psnr=28.90dB
+epoch 199: loss=0.0366 (251 batches, 14.2s)
+  val: pred_psnr=35.93dB pred_ssim=0.9234 bilinear_baseline_psnr=28.90dB
+epoch 200: loss=0.0361 (251 batches, 14.2s)
+  val: pred_psnr=35.98dB pred_ssim=0.9242 bilinear_baseline_psnr=28.90dB
+epoch 201: loss=0.0365 (251 batches, 14.2s)
+  val: pred_psnr=35.84dB pred_ssim=0.9238 bilinear_baseline_psnr=28.90dB
+epoch 202: loss=0.0367 (251 batches, 14.1s)
+  val: pred_psnr=35.97dB pred_ssim=0.9240 bilinear_baseline_psnr=28.90dB
+epoch 203: loss=0.0364 (251 batches, 13.8s)
+  val: pred_psnr=35.89dB pred_ssim=0.9233 bilinear_baseline_psnr=28.90dB
+epoch 204: loss=0.0365 (251 batches, 13.8s)
+  val: pred_psnr=35.84dB pred_ssim=0.9238 bilinear_baseline_psnr=28.90dB
+epoch 205: loss=0.0361 (251 batches, 14.1s)
+  val: pred_psnr=35.97dB pred_ssim=0.9247 bilinear_baseline_psnr=28.90dB
+epoch 206: loss=0.0360 (251 batches, 14.0s)
+  val: pred_psnr=35.95dB pred_ssim=0.9245 bilinear_baseline_psnr=28.90dB
+epoch 207: loss=0.0361 (251 batches, 13.9s)
+  val: pred_psnr=35.85dB pred_ssim=0.9234 bilinear_baseline_psnr=28.90dB
+epoch 208: loss=0.0361 (251 batches, 13.8s)
+  val: pred_psnr=35.88dB pred_ssim=0.9237 bilinear_baseline_psnr=28.90dB
+epoch 209: loss=0.0358 (251 batches, 13.8s)
+  val: pred_psnr=35.95dB pred_ssim=0.9255 bilinear_baseline_psnr=28.90dB
+epoch 210: loss=0.0360 (251 batches, 13.8s)
+  val: pred_psnr=35.96dB pred_ssim=0.9253 bilinear_baseline_psnr=28.90dB
+epoch 211: loss=0.0362 (251 batches, 13.8s)
+  val: pred_psnr=35.98dB pred_ssim=0.9252 bilinear_baseline_psnr=28.90dB
+epoch 212: loss=0.0359 (251 batches, 13.8s)
+  val: pred_psnr=35.96dB pred_ssim=0.9240 bilinear_baseline_psnr=28.90dB
+epoch 213: loss=0.0360 (251 batches, 13.9s)
+  val: pred_psnr=35.93dB pred_ssim=0.9243 bilinear_baseline_psnr=28.90dB
+epoch 214: loss=0.0360 (251 batches, 14.1s)
+  val: pred_psnr=35.85dB pred_ssim=0.9236 bilinear_baseline_psnr=28.90dB
+epoch 215: loss=0.0362 (251 batches, 14.0s)
+  val: pred_psnr=35.95dB pred_ssim=0.9240 bilinear_baseline_psnr=28.90dB
+epoch 216: loss=0.0362 (251 batches, 13.8s)
+  val: pred_psnr=35.89dB pred_ssim=0.9236 bilinear_baseline_psnr=28.90dB
+epoch 217: loss=0.0359 (251 batches, 13.9s)
+  val: pred_psnr=35.95dB pred_ssim=0.9247 bilinear_baseline_psnr=28.90dB
+epoch 218: loss=0.0359 (251 batches, 13.8s)
+  val: pred_psnr=35.91dB pred_ssim=0.9243 bilinear_baseline_psnr=28.90dB
+epoch 219: loss=0.0358 (251 batches, 13.8s)
+  val: pred_psnr=35.96dB pred_ssim=0.9244 bilinear_baseline_psnr=28.90dB
+epoch 220: loss=0.0356 (251 batches, 13.8s)
+  val: pred_psnr=35.72dB pred_ssim=0.9216 bilinear_baseline_psnr=28.90dB
+epoch 221: loss=0.0359 (251 batches, 13.8s)
+  val: pred_psnr=35.94dB pred_ssim=0.9230 bilinear_baseline_psnr=28.90dB
+epoch 222: loss=0.0354 (251 batches, 14.2s)
+  val: pred_psnr=36.01dB pred_ssim=0.9259 bilinear_baseline_psnr=28.90dB
+epoch 223: loss=0.0355 (251 batches, 14.2s)
+  val: pred_psnr=36.01dB pred_ssim=0.9256 bilinear_baseline_psnr=28.90dB
+epoch 224: loss=0.0356 (251 batches, 14.2s)
+  val: pred_psnr=35.97dB pred_ssim=0.9247 bilinear_baseline_psnr=28.90dB
+epoch 225: loss=0.0356 (251 batches, 14.2s)
+  val: pred_psnr=36.00dB pred_ssim=0.9250 bilinear_baseline_psnr=28.90dB
+epoch 226: loss=0.0356 (251 batches, 14.1s)
+  val: pred_psnr=36.02dB pred_ssim=0.9261 bilinear_baseline_psnr=28.90dB
+epoch 227: loss=0.0357 (251 batches, 14.2s)
+  val: pred_psnr=35.98dB pred_ssim=0.9256 bilinear_baseline_psnr=28.90dB
+epoch 228: loss=0.0356 (251 batches, 13.8s)
+  val: pred_psnr=35.94dB pred_ssim=0.9248 bilinear_baseline_psnr=28.90dB
+epoch 229: loss=0.0355 (251 batches, 13.8s)
+  val: pred_psnr=35.98dB pred_ssim=0.9249 bilinear_baseline_psnr=28.90dB
+epoch 230: loss=0.0355 (251 batches, 14.0s)
+  val: pred_psnr=35.97dB pred_ssim=0.9257 bilinear_baseline_psnr=28.90dB
+epoch 231: loss=0.0358 (251 batches, 14.1s)
+  val: pred_psnr=36.01dB pred_ssim=0.9256 bilinear_baseline_psnr=28.90dB
+epoch 232: loss=0.0356 (251 batches, 14.0s)
+  val: pred_psnr=35.97dB pred_ssim=0.9253 bilinear_baseline_psnr=28.90dB
+epoch 233: loss=0.0354 (251 batches, 13.9s)
+  val: pred_psnr=35.97dB pred_ssim=0.9251 bilinear_baseline_psnr=28.90dB
+epoch 234: loss=0.0353 (251 batches, 14.3s)
+  val: pred_psnr=36.01dB pred_ssim=0.9266 bilinear_baseline_psnr=28.90dB
+epoch 235: loss=0.0352 (251 batches, 15.4s)
+  val: pred_psnr=35.94dB pred_ssim=0.9251 bilinear_baseline_psnr=28.90dB
+epoch 236: loss=0.0355 (251 batches, 15.1s)
+  val: pred_psnr=35.88dB pred_ssim=0.9239 bilinear_baseline_psnr=28.90dB
+epoch 237: loss=0.0351 (251 batches, 13.7s)
+  val: pred_psnr=35.94dB pred_ssim=0.9260 bilinear_baseline_psnr=28.90dB
+epoch 238: loss=0.0349 (251 batches, 14.0s)
+  val: pred_psnr=35.99dB pred_ssim=0.9259 bilinear_baseline_psnr=28.90dB
+epoch 239: loss=0.0353 (251 batches, 14.0s)
+  val: pred_psnr=35.99dB pred_ssim=0.9262 bilinear_baseline_psnr=28.90dB
+epoch 240: loss=0.0351 (251 batches, 13.6s)
+  val: pred_psnr=35.96dB pred_ssim=0.9257 bilinear_baseline_psnr=28.90dB
+epoch 241: loss=0.0352 (251 batches, 13.8s)
+  val: pred_psnr=36.07dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 242: loss=0.0353 (251 batches, 13.9s)
+  val: pred_psnr=35.88dB pred_ssim=0.9240 bilinear_baseline_psnr=28.90dB
+epoch 243: loss=0.0352 (251 batches, 13.9s)
+  val: pred_psnr=36.04dB pred_ssim=0.9267 bilinear_baseline_psnr=28.90dB
+epoch 244: loss=0.0351 (251 batches, 13.8s)
+  val: pred_psnr=36.06dB pred_ssim=0.9266 bilinear_baseline_psnr=28.90dB
+epoch 245: loss=0.0353 (251 batches, 13.7s)
+  val: pred_psnr=35.99dB pred_ssim=0.9261 bilinear_baseline_psnr=28.90dB
+epoch 246: loss=0.0347 (251 batches, 13.9s)
+  val: pred_psnr=35.99dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 247: loss=0.0347 (251 batches, 14.1s)
+  val: pred_psnr=36.01dB pred_ssim=0.9259 bilinear_baseline_psnr=28.90dB
+epoch 248: loss=0.0349 (251 batches, 14.1s)
+  val: pred_psnr=36.00dB pred_ssim=0.9268 bilinear_baseline_psnr=28.90dB
+epoch 249: loss=0.0351 (251 batches, 14.1s)
+  val: pred_psnr=36.03dB pred_ssim=0.9264 bilinear_baseline_psnr=28.90dB
+epoch 250: loss=0.0349 (251 batches, 14.1s)
+  val: pred_psnr=36.03dB pred_ssim=0.9270 bilinear_baseline_psnr=28.90dB
+epoch 251: loss=0.0348 (251 batches, 14.1s)
+  val: pred_psnr=36.02dB pred_ssim=0.9275 bilinear_baseline_psnr=28.90dB
+epoch 252: loss=0.0347 (251 batches, 14.1s)
+  val: pred_psnr=36.06dB pred_ssim=0.9269 bilinear_baseline_psnr=28.90dB
+epoch 253: loss=0.0347 (251 batches, 13.8s)
+  val: pred_psnr=35.98dB pred_ssim=0.9267 bilinear_baseline_psnr=28.90dB
+epoch 254: loss=0.0349 (251 batches, 13.8s)
+  val: pred_psnr=36.04dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 255: loss=0.0347 (251 batches, 14.1s)
+  val: pred_psnr=36.02dB pred_ssim=0.9261 bilinear_baseline_psnr=28.90dB
+epoch 256: loss=0.0345 (251 batches, 14.1s)
+  val: pred_psnr=35.97dB pred_ssim=0.9255 bilinear_baseline_psnr=28.90dB
+epoch 257: loss=0.0349 (251 batches, 13.9s)
+  val: pred_psnr=36.09dB pred_ssim=0.9270 bilinear_baseline_psnr=28.90dB
+epoch 258: loss=0.0348 (251 batches, 14.0s)
+  val: pred_psnr=36.02dB pred_ssim=0.9269 bilinear_baseline_psnr=28.90dB
+epoch 259: loss=0.0349 (251 batches, 14.0s)
+  val: pred_psnr=36.00dB pred_ssim=0.9262 bilinear_baseline_psnr=28.90dB
+epoch 260: loss=0.0344 (251 batches, 13.9s)
+  val: pred_psnr=36.05dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 261: loss=0.0347 (251 batches, 13.7s)
+  val: pred_psnr=36.04dB pred_ssim=0.9272 bilinear_baseline_psnr=28.90dB
+epoch 262: loss=0.0345 (251 batches, 13.7s)
+  val: pred_psnr=36.01dB pred_ssim=0.9273 bilinear_baseline_psnr=28.90dB
+epoch 263: loss=0.0344 (251 batches, 14.0s)
+  val: pred_psnr=35.98dB pred_ssim=0.9265 bilinear_baseline_psnr=28.90dB
+epoch 264: loss=0.0346 (251 batches, 14.1s)
+  val: pred_psnr=36.03dB pred_ssim=0.9273 bilinear_baseline_psnr=28.90dB
+epoch 265: loss=0.0348 (251 batches, 14.0s)
+  val: pred_psnr=35.99dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 266: loss=0.0346 (251 batches, 14.0s)
+  val: pred_psnr=36.07dB pred_ssim=0.9273 bilinear_baseline_psnr=28.90dB
+epoch 267: loss=0.0348 (251 batches, 13.9s)
+  val: pred_psnr=36.04dB pred_ssim=0.9264 bilinear_baseline_psnr=28.90dB
+epoch 268: loss=0.0341 (251 batches, 14.0s)
+  val: pred_psnr=36.02dB pred_ssim=0.9268 bilinear_baseline_psnr=28.90dB
+epoch 269: loss=0.0343 (251 batches, 13.8s)
+  val: pred_psnr=36.00dB pred_ssim=0.9270 bilinear_baseline_psnr=28.90dB
+epoch 270: loss=0.0345 (251 batches, 13.7s)
+  val: pred_psnr=36.10dB pred_ssim=0.9277 bilinear_baseline_psnr=28.90dB
+epoch 271: loss=0.0344 (251 batches, 13.9s)
+  val: pred_psnr=36.10dB pred_ssim=0.9277 bilinear_baseline_psnr=28.90dB
+epoch 272: loss=0.0345 (251 batches, 14.1s)
+  val: pred_psnr=36.04dB pred_ssim=0.9274 bilinear_baseline_psnr=28.90dB
+epoch 273: loss=0.0343 (251 batches, 14.1s)
+  val: pred_psnr=36.10dB pred_ssim=0.9281 bilinear_baseline_psnr=28.90dB
+epoch 274: loss=0.0340 (251 batches, 14.1s)
+  val: pred_psnr=36.01dB pred_ssim=0.9274 bilinear_baseline_psnr=28.90dB
+epoch 275: loss=0.0343 (251 batches, 14.2s)
+  val: pred_psnr=35.98dB pred_ssim=0.9257 bilinear_baseline_psnr=28.90dB
+epoch 276: loss=0.0339 (251 batches, 14.1s)
+  val: pred_psnr=36.04dB pred_ssim=0.9276 bilinear_baseline_psnr=28.90dB
+epoch 277: loss=0.0341 (251 batches, 14.1s)
+  val: pred_psnr=36.07dB pred_ssim=0.9274 bilinear_baseline_psnr=28.90dB
+epoch 278: loss=0.0345 (251 batches, 13.8s)
+  val: pred_psnr=36.12dB pred_ssim=0.9281 bilinear_baseline_psnr=28.90dB
+epoch 279: loss=0.0341 (251 batches, 13.9s)
+  val: pred_psnr=36.04dB pred_ssim=0.9277 bilinear_baseline_psnr=28.90dB
+epoch 280: loss=0.0342 (251 batches, 14.1s)
+  val: pred_psnr=36.10dB pred_ssim=0.9273 bilinear_baseline_psnr=28.90dB
+epoch 281: loss=0.0343 (251 batches, 14.0s)
+  val: pred_psnr=36.02dB pred_ssim=0.9270 bilinear_baseline_psnr=28.90dB
+epoch 282: loss=0.0340 (251 batches, 13.9s)
+  val: pred_psnr=35.94dB pred_ssim=0.9272 bilinear_baseline_psnr=28.90dB
+epoch 283: loss=0.0343 (251 batches, 14.0s)
+  val: pred_psnr=36.03dB pred_ssim=0.9267 bilinear_baseline_psnr=28.90dB
+epoch 284: loss=0.0341 (251 batches, 14.0s)
+  val: pred_psnr=36.10dB pred_ssim=0.9272 bilinear_baseline_psnr=28.90dB
+epoch 285: loss=0.0341 (251 batches, 13.9s)
+  val: pred_psnr=35.95dB pred_ssim=0.9265 bilinear_baseline_psnr=28.90dB
+epoch 286: loss=0.0341 (251 batches, 13.7s)
+  val: pred_psnr=36.11dB pred_ssim=0.9281 bilinear_baseline_psnr=28.90dB
+epoch 287: loss=0.0339 (251 batches, 13.7s)
+  val: pred_psnr=35.99dB pred_ssim=0.9274 bilinear_baseline_psnr=28.90dB
+epoch 288: loss=0.0339 (251 batches, 14.1s)
+  val: pred_psnr=36.12dB pred_ssim=0.9276 bilinear_baseline_psnr=28.90dB
+epoch 289: loss=0.0340 (251 batches, 14.1s)
+  val: pred_psnr=35.95dB pred_ssim=0.9269 bilinear_baseline_psnr=28.90dB
+epoch 290: loss=0.0339 (251 batches, 14.0s)
+  val: pred_psnr=36.11dB pred_ssim=0.9280 bilinear_baseline_psnr=28.90dB
+epoch 291: loss=0.0341 (251 batches, 14.0s)
+  val: pred_psnr=35.98dB pred_ssim=0.9268 bilinear_baseline_psnr=28.90dB
+epoch 292: loss=0.0341 (251 batches, 14.0s)
+  val: pred_psnr=36.01dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 293: loss=0.0340 (251 batches, 14.0s)
+  val: pred_psnr=36.04dB pred_ssim=0.9272 bilinear_baseline_psnr=28.90dB
+epoch 294: loss=0.0339 (251 batches, 13.8s)
+  val: pred_psnr=36.15dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 295: loss=0.0340 (251 batches, 13.8s)
+  val: pred_psnr=36.10dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 296: loss=0.0343 (251 batches, 14.0s)
+  val: pred_psnr=36.00dB pred_ssim=0.9273 bilinear_baseline_psnr=28.90dB
+epoch 297: loss=0.0341 (251 batches, 14.1s)
+  val: pred_psnr=36.02dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 298: loss=0.0337 (251 batches, 14.2s)
+  val: pred_psnr=35.93dB pred_ssim=0.9270 bilinear_baseline_psnr=28.90dB
+epoch 299: loss=0.0336 (251 batches, 14.2s)
+  val: pred_psnr=36.02dB pred_ssim=0.9271 bilinear_baseline_psnr=28.90dB
+epoch 300: loss=0.0336 (251 batches, 14.1s)
+  val: pred_psnr=36.10dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 301: loss=0.0338 (251 batches, 14.1s)
+  val: pred_psnr=36.11dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 302: loss=0.0338 (251 batches, 14.0s)
+  val: pred_psnr=36.09dB pred_ssim=0.9281 bilinear_baseline_psnr=28.90dB
+epoch 303: loss=0.0339 (251 batches, 13.8s)
+  val: pred_psnr=36.08dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 304: loss=0.0333 (251 batches, 13.9s)
+  val: pred_psnr=36.10dB pred_ssim=0.9282 bilinear_baseline_psnr=28.90dB
+epoch 305: loss=0.0336 (251 batches, 14.1s)
+  val: pred_psnr=36.11dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 306: loss=0.0336 (251 batches, 14.0s)
+  val: pred_psnr=36.12dB pred_ssim=0.9276 bilinear_baseline_psnr=28.90dB
+epoch 307: loss=0.0337 (251 batches, 14.0s)
+  val: pred_psnr=36.04dB pred_ssim=0.9272 bilinear_baseline_psnr=28.90dB
+epoch 308: loss=0.0337 (251 batches, 14.0s)
+  val: pred_psnr=36.14dB pred_ssim=0.9287 bilinear_baseline_psnr=28.90dB
+epoch 309: loss=0.0336 (251 batches, 13.9s)
+  val: pred_psnr=36.15dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 310: loss=0.0334 (251 batches, 13.9s)
+  val: pred_psnr=36.12dB pred_ssim=0.9282 bilinear_baseline_psnr=28.90dB
+epoch 311: loss=0.0337 (251 batches, 13.7s)
+  val: pred_psnr=36.07dB pred_ssim=0.9282 bilinear_baseline_psnr=28.90dB
+epoch 312: loss=0.0333 (251 batches, 13.7s)
+  val: pred_psnr=36.16dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 313: loss=0.0337 (251 batches, 14.1s)
+  val: pred_psnr=36.04dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 314: loss=0.0335 (251 batches, 14.1s)
+  val: pred_psnr=36.11dB pred_ssim=0.9279 bilinear_baseline_psnr=28.90dB
+epoch 315: loss=0.0335 (251 batches, 13.9s)
+  val: pred_psnr=36.08dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 316: loss=0.0335 (251 batches, 14.0s)
+  val: pred_psnr=36.09dB pred_ssim=0.9279 bilinear_baseline_psnr=28.90dB
+epoch 317: loss=0.0335 (251 batches, 14.0s)
+  val: pred_psnr=36.13dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 318: loss=0.0337 (251 batches, 14.0s)
+  val: pred_psnr=36.14dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 319: loss=0.0332 (251 batches, 13.8s)
+  val: pred_psnr=36.10dB pred_ssim=0.9281 bilinear_baseline_psnr=28.90dB
+epoch 320: loss=0.0334 (251 batches, 13.7s)
+  val: pred_psnr=36.13dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 321: loss=0.0335 (251 batches, 14.1s)
+  val: pred_psnr=36.06dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 322: loss=0.0331 (251 batches, 14.1s)
+  val: pred_psnr=36.13dB pred_ssim=0.9286 bilinear_baseline_psnr=28.90dB
+epoch 323: loss=0.0332 (251 batches, 14.1s)
+  val: pred_psnr=36.14dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 324: loss=0.0333 (251 batches, 14.2s)
+  val: pred_psnr=36.14dB pred_ssim=0.9285 bilinear_baseline_psnr=28.90dB
+epoch 325: loss=0.0336 (251 batches, 14.2s)
+  val: pred_psnr=36.05dB pred_ssim=0.9286 bilinear_baseline_psnr=28.90dB
+epoch 326: loss=0.0332 (251 batches, 14.2s)
+  val: pred_psnr=36.12dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 327: loss=0.0333 (251 batches, 14.0s)
+  val: pred_psnr=36.15dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 328: loss=0.0334 (251 batches, 13.8s)
+  val: pred_psnr=36.17dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 329: loss=0.0335 (251 batches, 13.9s)
+  val: pred_psnr=36.14dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 330: loss=0.0333 (251 batches, 14.1s)
+  val: pred_psnr=36.13dB pred_ssim=0.9287 bilinear_baseline_psnr=28.90dB
+epoch 331: loss=0.0333 (251 batches, 14.0s)
+  val: pred_psnr=36.11dB pred_ssim=0.9280 bilinear_baseline_psnr=28.90dB
+epoch 332: loss=0.0333 (251 batches, 14.1s)
+  val: pred_psnr=36.13dB pred_ssim=0.9280 bilinear_baseline_psnr=28.90dB
+epoch 333: loss=0.0332 (251 batches, 14.0s)
+  val: pred_psnr=36.15dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 334: loss=0.0333 (251 batches, 14.0s)
+  val: pred_psnr=36.19dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 335: loss=0.0334 (251 batches, 13.8s)
+  val: pred_psnr=36.18dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 336: loss=0.0333 (251 batches, 13.7s)
+  val: pred_psnr=36.17dB pred_ssim=0.9292 bilinear_baseline_psnr=28.90dB
+epoch 337: loss=0.0335 (251 batches, 13.8s)
+  val: pred_psnr=36.15dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 338: loss=0.0332 (251 batches, 14.0s)
+  val: pred_psnr=36.14dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 339: loss=0.0331 (251 batches, 14.1s)
+  val: pred_psnr=36.18dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 340: loss=0.0329 (251 batches, 14.0s)
+  val: pred_psnr=36.16dB pred_ssim=0.9285 bilinear_baseline_psnr=28.90dB
+epoch 341: loss=0.0330 (251 batches, 14.0s)
+  val: pred_psnr=36.18dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 342: loss=0.0331 (251 batches, 14.0s)
+  val: pred_psnr=36.14dB pred_ssim=0.9286 bilinear_baseline_psnr=28.90dB
+epoch 343: loss=0.0330 (251 batches, 13.9s)
+  val: pred_psnr=36.17dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 344: loss=0.0329 (251 batches, 13.7s)
+  val: pred_psnr=36.18dB pred_ssim=0.9292 bilinear_baseline_psnr=28.90dB
+epoch 345: loss=0.0330 (251 batches, 13.7s)
+  val: pred_psnr=36.16dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 346: loss=0.0329 (251 batches, 14.1s)
+  val: pred_psnr=36.15dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 347: loss=0.0332 (251 batches, 14.2s)
+  val: pred_psnr=36.12dB pred_ssim=0.9280 bilinear_baseline_psnr=28.90dB
+epoch 348: loss=0.0327 (251 batches, 14.2s)
+  val: pred_psnr=36.09dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 349: loss=0.0330 (251 batches, 14.2s)
+  val: pred_psnr=36.11dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 350: loss=0.0331 (251 batches, 14.1s)
+  val: pred_psnr=36.13dB pred_ssim=0.9278 bilinear_baseline_psnr=28.90dB
+epoch 351: loss=0.0329 (251 batches, 14.1s)
+  val: pred_psnr=36.18dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 352: loss=0.0329 (251 batches, 13.8s)
+  val: pred_psnr=36.12dB pred_ssim=0.9279 bilinear_baseline_psnr=28.90dB
+epoch 353: loss=0.0331 (251 batches, 13.7s)
+  val: pred_psnr=36.10dB pred_ssim=0.9276 bilinear_baseline_psnr=28.90dB
+epoch 354: loss=0.0329 (251 batches, 14.0s)
+  val: pred_psnr=36.17dB pred_ssim=0.9281 bilinear_baseline_psnr=28.90dB
+epoch 355: loss=0.0331 (251 batches, 14.0s)
+  val: pred_psnr=36.19dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 356: loss=0.0330 (251 batches, 14.1s)
+  val: pred_psnr=36.15dB pred_ssim=0.9287 bilinear_baseline_psnr=28.90dB
+epoch 357: loss=0.0329 (251 batches, 14.1s)
+  val: pred_psnr=36.11dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 358: loss=0.0328 (251 batches, 14.0s)
+  val: pred_psnr=36.12dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 359: loss=0.0328 (251 batches, 14.0s)
+  val: pred_psnr=36.21dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 360: loss=0.0328 (251 batches, 13.8s)
+  val: pred_psnr=36.14dB pred_ssim=0.9285 bilinear_baseline_psnr=28.90dB
+epoch 361: loss=0.0330 (251 batches, 13.7s)
+  val: pred_psnr=36.13dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 362: loss=0.0327 (251 batches, 13.9s)
+  val: pred_psnr=36.07dB pred_ssim=0.9268 bilinear_baseline_psnr=28.90dB
+epoch 363: loss=0.0329 (251 batches, 14.1s)
+  val: pred_psnr=36.16dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 364: loss=0.0327 (251 batches, 14.0s)
+  val: pred_psnr=36.21dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 365: loss=0.0328 (251 batches, 14.1s)
+  val: pred_psnr=36.16dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 366: loss=0.0326 (251 batches, 14.0s)
+  val: pred_psnr=36.18dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 367: loss=0.0325 (251 batches, 13.9s)
+  val: pred_psnr=36.14dB pred_ssim=0.9282 bilinear_baseline_psnr=28.90dB
+epoch 368: loss=0.0326 (251 batches, 13.9s)
+  val: pred_psnr=36.17dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 369: loss=0.0327 (251 batches, 13.8s)
+  val: pred_psnr=36.18dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 370: loss=0.0327 (251 batches, 13.8s)
+  val: pred_psnr=36.08dB pred_ssim=0.9278 bilinear_baseline_psnr=28.90dB
+epoch 371: loss=0.0327 (251 batches, 14.2s)
+  val: pred_psnr=36.12dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 372: loss=0.0327 (251 batches, 14.2s)
+  val: pred_psnr=36.18dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 373: loss=0.0327 (251 batches, 14.2s)
+  val: pred_psnr=36.15dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 374: loss=0.0325 (251 batches, 14.2s)
+  val: pred_psnr=36.15dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 375: loss=0.0326 (251 batches, 14.1s)
+  val: pred_psnr=36.19dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 376: loss=0.0326 (251 batches, 14.1s)
+  val: pred_psnr=36.17dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 377: loss=0.0327 (251 batches, 13.8s)
+  val: pred_psnr=36.12dB pred_ssim=0.9282 bilinear_baseline_psnr=28.90dB
+epoch 378: loss=0.0330 (251 batches, 13.8s)
+  val: pred_psnr=36.20dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 379: loss=0.0327 (251 batches, 14.1s)
+  val: pred_psnr=36.21dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 380: loss=0.0326 (251 batches, 14.1s)
+  val: pred_psnr=36.19dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 381: loss=0.0326 (251 batches, 13.9s)
+  val: pred_psnr=36.18dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 382: loss=0.0324 (251 batches, 14.0s)
+  val: pred_psnr=36.15dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 383: loss=0.0326 (251 batches, 13.9s)
+  val: pred_psnr=36.22dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 384: loss=0.0326 (251 batches, 14.0s)
+  val: pred_psnr=36.18dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 385: loss=0.0324 (251 batches, 13.8s)
+  val: pred_psnr=36.19dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 386: loss=0.0325 (251 batches, 13.7s)
+  val: pred_psnr=36.17dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 387: loss=0.0322 (251 batches, 13.9s)
+  val: pred_psnr=36.21dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 388: loss=0.0323 (251 batches, 14.1s)
+  val: pred_psnr=36.21dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 389: loss=0.0322 (251 batches, 14.0s)
+  val: pred_psnr=36.20dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 390: loss=0.0323 (251 batches, 14.1s)
+  val: pred_psnr=36.19dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 391: loss=0.0326 (251 batches, 14.0s)
+  val: pred_psnr=36.13dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 392: loss=0.0319 (251 batches, 14.0s)
+  val: pred_psnr=36.15dB pred_ssim=0.9287 bilinear_baseline_psnr=28.90dB
+epoch 393: loss=0.0324 (251 batches, 13.9s)
+  val: pred_psnr=36.19dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 394: loss=0.0323 (251 batches, 13.8s)
+  val: pred_psnr=36.12dB pred_ssim=0.9285 bilinear_baseline_psnr=28.90dB
+epoch 395: loss=0.0323 (251 batches, 13.9s)
+  val: pred_psnr=36.17dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 396: loss=0.0326 (251 batches, 14.1s)
+  val: pred_psnr=36.23dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 397: loss=0.0323 (251 batches, 14.1s)
+  val: pred_psnr=36.20dB pred_ssim=0.9292 bilinear_baseline_psnr=28.90dB
+epoch 398: loss=0.0324 (251 batches, 14.1s)
+  val: pred_psnr=36.12dB pred_ssim=0.9278 bilinear_baseline_psnr=28.90dB
+epoch 399: loss=0.0325 (251 batches, 14.1s)
+  val: pred_psnr=36.24dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 400: loss=0.0322 (251 batches, 14.1s)
+  val: pred_psnr=36.24dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 401: loss=0.0324 (251 batches, 14.1s)
+  val: pred_psnr=36.22dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 402: loss=0.0323 (251 batches, 13.8s)
+  val: pred_psnr=36.18dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 403: loss=0.0323 (251 batches, 13.8s)
+  val: pred_psnr=36.23dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 404: loss=0.0322 (251 batches, 14.0s)
+  val: pred_psnr=36.25dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 405: loss=0.0325 (251 batches, 14.1s)
+  val: pred_psnr=36.18dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 406: loss=0.0324 (251 batches, 13.9s)
+  val: pred_psnr=36.18dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 407: loss=0.0322 (251 batches, 14.0s)
+  val: pred_psnr=36.21dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 408: loss=0.0323 (251 batches, 14.0s)
+  val: pred_psnr=36.17dB pred_ssim=0.9286 bilinear_baseline_psnr=28.90dB
+epoch 409: loss=0.0320 (251 batches, 13.9s)
+  val: pred_psnr=36.20dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 410: loss=0.0322 (251 batches, 13.8s)
+  val: pred_psnr=36.19dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 411: loss=0.0321 (251 batches, 13.7s)
+  val: pred_psnr=36.17dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 412: loss=0.0321 (251 batches, 14.0s)
+  val: pred_psnr=36.20dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 413: loss=0.0322 (251 batches, 14.1s)
+  val: pred_psnr=36.15dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 414: loss=0.0320 (251 batches, 14.0s)
+  val: pred_psnr=36.14dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 415: loss=0.0320 (251 batches, 13.9s)
+  val: pred_psnr=36.16dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 416: loss=0.0323 (251 batches, 14.0s)
+  val: pred_psnr=36.17dB pred_ssim=0.9285 bilinear_baseline_psnr=28.90dB
+epoch 417: loss=0.0322 (251 batches, 13.9s)
+  val: pred_psnr=36.04dB pred_ssim=0.9274 bilinear_baseline_psnr=28.90dB
+epoch 418: loss=0.0324 (251 batches, 13.9s)
+  val: pred_psnr=36.09dB pred_ssim=0.9280 bilinear_baseline_psnr=28.90dB
+epoch 419: loss=0.0319 (251 batches, 13.7s)
+  val: pred_psnr=36.11dB pred_ssim=0.9276 bilinear_baseline_psnr=28.90dB
+epoch 420: loss=0.0319 (251 batches, 13.9s)
+  val: pred_psnr=36.19dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 421: loss=0.0320 (251 batches, 14.2s)
+  val: pred_psnr=36.09dB pred_ssim=0.9279 bilinear_baseline_psnr=28.90dB
+epoch 422: loss=0.0321 (251 batches, 14.2s)
+  val: pred_psnr=36.14dB pred_ssim=0.9286 bilinear_baseline_psnr=28.90dB
+epoch 423: loss=0.0318 (251 batches, 14.2s)
+  val: pred_psnr=36.19dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 424: loss=0.0320 (251 batches, 14.2s)
+  val: pred_psnr=36.09dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 425: loss=0.0318 (251 batches, 14.1s)
+  val: pred_psnr=36.22dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 426: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.06dB pred_ssim=0.9276 bilinear_baseline_psnr=28.90dB
+epoch 427: loss=0.0321 (251 batches, 13.7s)
+  val: pred_psnr=36.19dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 428: loss=0.0318 (251 batches, 13.8s)
+  val: pred_psnr=36.19dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 429: loss=0.0320 (251 batches, 14.1s)
+  val: pred_psnr=36.20dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 430: loss=0.0320 (251 batches, 14.1s)
+  val: pred_psnr=36.18dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 431: loss=0.0321 (251 batches, 13.9s)
+  val: pred_psnr=36.14dB pred_ssim=0.9287 bilinear_baseline_psnr=28.90dB
+epoch 432: loss=0.0321 (251 batches, 13.9s)
+  val: pred_psnr=36.17dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 433: loss=0.0318 (251 batches, 13.9s)
+  val: pred_psnr=36.13dB pred_ssim=0.9286 bilinear_baseline_psnr=28.90dB
+epoch 434: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.21dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 435: loss=0.0320 (251 batches, 13.8s)
+  val: pred_psnr=36.18dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 436: loss=0.0316 (251 batches, 13.8s)
+  val: pred_psnr=36.18dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 437: loss=0.0319 (251 batches, 14.1s)
+  val: pred_psnr=36.10dB pred_ssim=0.9280 bilinear_baseline_psnr=28.90dB
+epoch 438: loss=0.0316 (251 batches, 14.1s)
+  val: pred_psnr=35.96dB pred_ssim=0.9250 bilinear_baseline_psnr=28.90dB
+epoch 439: loss=0.0316 (251 batches, 14.0s)
+  val: pred_psnr=36.19dB pred_ssim=0.9290 bilinear_baseline_psnr=28.90dB
+epoch 440: loss=0.0318 (251 batches, 14.0s)
+  val: pred_psnr=36.18dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 441: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.17dB pred_ssim=0.9292 bilinear_baseline_psnr=28.90dB
+epoch 442: loss=0.0321 (251 batches, 13.9s)
+  val: pred_psnr=36.20dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 443: loss=0.0318 (251 batches, 13.8s)
+  val: pred_psnr=36.14dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 444: loss=0.0318 (251 batches, 13.7s)
+  val: pred_psnr=36.13dB pred_ssim=0.9284 bilinear_baseline_psnr=28.90dB
+epoch 445: loss=0.0320 (251 batches, 13.9s)
+  val: pred_psnr=36.12dB pred_ssim=0.9285 bilinear_baseline_psnr=28.90dB
+epoch 446: loss=0.0318 (251 batches, 14.1s)
+  val: pred_psnr=36.17dB pred_ssim=0.9292 bilinear_baseline_psnr=28.90dB
+epoch 447: loss=0.0320 (251 batches, 14.1s)
+  val: pred_psnr=36.18dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 448: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.10dB pred_ssim=0.9285 bilinear_baseline_psnr=28.90dB
+epoch 449: loss=0.0318 (251 batches, 14.1s)
+  val: pred_psnr=36.17dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 450: loss=0.0317 (251 batches, 14.1s)
+  val: pred_psnr=36.17dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 451: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.17dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 452: loss=0.0317 (251 batches, 13.8s)
+  val: pred_psnr=36.13dB pred_ssim=0.9289 bilinear_baseline_psnr=28.90dB
+epoch 453: loss=0.0317 (251 batches, 13.9s)
+  val: pred_psnr=36.21dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 454: loss=0.0314 (251 batches, 14.2s)
+  val: pred_psnr=36.19dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 455: loss=0.0318 (251 batches, 14.1s)
+  val: pred_psnr=36.20dB pred_ssim=0.9292 bilinear_baseline_psnr=28.90dB
+epoch 456: loss=0.0316 (251 batches, 13.9s)
+  val: pred_psnr=36.22dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 457: loss=0.0316 (251 batches, 14.0s)
+  val: pred_psnr=36.17dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 458: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.23dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 459: loss=0.0316 (251 batches, 14.0s)
+  val: pred_psnr=36.17dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 460: loss=0.0315 (251 batches, 13.8s)
+  val: pred_psnr=36.20dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 461: loss=0.0317 (251 batches, 13.8s)
+  val: pred_psnr=36.21dB pred_ssim=0.9287 bilinear_baseline_psnr=28.90dB
+epoch 462: loss=0.0319 (251 batches, 14.1s)
+  val: pred_psnr=36.20dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 463: loss=0.0320 (251 batches, 14.1s)
+  val: pred_psnr=36.23dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 464: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.23dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 465: loss=0.0314 (251 batches, 14.1s)
+  val: pred_psnr=36.21dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 466: loss=0.0317 (251 batches, 14.0s)
+  val: pred_psnr=36.18dB pred_ssim=0.9283 bilinear_baseline_psnr=28.90dB
+epoch 467: loss=0.0316 (251 batches, 13.9s)
+  val: pred_psnr=36.20dB pred_ssim=0.9292 bilinear_baseline_psnr=28.90dB
+epoch 468: loss=0.0316 (251 batches, 13.8s)
+  val: pred_psnr=36.21dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 469: loss=0.0315 (251 batches, 13.8s)
+  val: pred_psnr=36.21dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 470: loss=0.0315 (251 batches, 14.0s)
+  val: pred_psnr=36.23dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 471: loss=0.0315 (251 batches, 14.2s)
+  val: pred_psnr=36.22dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 472: loss=0.0314 (251 batches, 14.1s)
+  val: pred_psnr=36.19dB pred_ssim=0.9288 bilinear_baseline_psnr=28.90dB
+epoch 473: loss=0.0313 (251 batches, 14.2s)
+  val: pred_psnr=36.25dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 474: loss=0.0314 (251 batches, 14.2s)
+  val: pred_psnr=36.21dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 475: loss=0.0315 (251 batches, 14.2s)
+  val: pred_psnr=36.19dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 476: loss=0.0317 (251 batches, 13.9s)
+  val: pred_psnr=36.21dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 477: loss=0.0315 (251 batches, 13.7s)
+  val: pred_psnr=36.22dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 478: loss=0.0314 (251 batches, 13.9s)
+  val: pred_psnr=36.22dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 479: loss=0.0315 (251 batches, 14.1s)
+  val: pred_psnr=36.21dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 480: loss=0.0317 (251 batches, 14.1s)
+  val: pred_psnr=36.22dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 481: loss=0.0316 (251 batches, 14.0s)
+  val: pred_psnr=36.23dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 482: loss=0.0316 (251 batches, 14.0s)
+  val: pred_psnr=36.23dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 483: loss=0.0313 (251 batches, 13.9s)
+  val: pred_psnr=36.23dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 484: loss=0.0314 (251 batches, 14.0s)
+  val: pred_psnr=36.23dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 485: loss=0.0314 (251 batches, 13.7s)
+  val: pred_psnr=36.25dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 486: loss=0.0314 (251 batches, 13.8s)
+  val: pred_psnr=36.24dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 487: loss=0.0317 (251 batches, 14.1s)
+  val: pred_psnr=36.15dB pred_ssim=0.9286 bilinear_baseline_psnr=28.90dB
+epoch 488: loss=0.0316 (251 batches, 14.0s)
+  val: pred_psnr=36.24dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 489: loss=0.0313 (251 batches, 13.9s)
+  val: pred_psnr=36.25dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 490: loss=0.0314 (251 batches, 14.1s)
+  val: pred_psnr=36.23dB pred_ssim=0.9291 bilinear_baseline_psnr=28.90dB
+epoch 491: loss=0.0313 (251 batches, 13.9s)
+  val: pred_psnr=36.22dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 492: loss=0.0315 (251 batches, 14.0s)
+  val: pred_psnr=36.24dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 493: loss=0.0313 (251 batches, 13.7s)
+  val: pred_psnr=36.25dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 494: loss=0.0312 (251 batches, 13.7s)
+  val: pred_psnr=36.21dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 495: loss=0.0314 (251 batches, 14.0s)
+  val: pred_psnr=36.23dB pred_ssim=0.9293 bilinear_baseline_psnr=28.90dB
+epoch 496: loss=0.0314 (251 batches, 14.1s)
+  val: pred_psnr=36.23dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 497: loss=0.0315 (251 batches, 14.2s)
+  val: pred_psnr=36.23dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 498: loss=0.0314 (251 batches, 14.2s)
+  val: pred_psnr=36.23dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 499: loss=0.0312 (251 batches, 14.1s)
+  val: pred_psnr=36.24dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 500: loss=0.0314 (251 batches, 14.2s)
+  val: pred_psnr=36.24dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 501: loss=0.0312 (251 batches, 13.9s)
+  val: pred_psnr=36.23dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 502: loss=0.0312 (251 batches, 13.8s)
+  val: pred_psnr=36.26dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 503: loss=0.0315 (251 batches, 13.9s)
+  val: pred_psnr=36.24dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 504: loss=0.0310 (251 batches, 14.1s)
+  val: pred_psnr=36.23dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 505: loss=0.0310 (251 batches, 14.0s)
+  val: pred_psnr=36.22dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 506: loss=0.0313 (251 batches, 14.0s)
+  val: pred_psnr=36.24dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 507: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.24dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 508: loss=0.0312 (251 batches, 14.0s)
+  val: pred_psnr=36.22dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 509: loss=0.0312 (251 batches, 13.9s)
+  val: pred_psnr=36.25dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 510: loss=0.0312 (251 batches, 13.7s)
+  val: pred_psnr=36.25dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 511: loss=0.0315 (251 batches, 13.8s)
+  val: pred_psnr=36.23dB pred_ssim=0.9295 bilinear_baseline_psnr=28.90dB
+epoch 512: loss=0.0313 (251 batches, 14.1s)
+  val: pred_psnr=36.22dB pred_ssim=0.9294 bilinear_baseline_psnr=28.90dB
+epoch 513: loss=0.0313 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 514: loss=0.0314 (251 batches, 14.0s)
+  val: pred_psnr=36.25dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 515: loss=0.0313 (251 batches, 14.0s)
+  val: pred_psnr=36.24dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 516: loss=0.0314 (251 batches, 14.0s)
+  val: pred_psnr=36.25dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 517: loss=0.0310 (251 batches, 13.9s)
+  val: pred_psnr=36.23dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 518: loss=0.0312 (251 batches, 13.7s)
+  val: pred_psnr=36.23dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 519: loss=0.0313 (251 batches, 13.7s)
+  val: pred_psnr=36.24dB pred_ssim=0.9297 bilinear_baseline_psnr=28.90dB
+epoch 520: loss=0.0313 (251 batches, 14.2s)
+  val: pred_psnr=36.26dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 521: loss=0.0313 (251 batches, 14.2s)
+  val: pred_psnr=36.25dB pred_ssim=0.9296 bilinear_baseline_psnr=28.90dB
+epoch 522: loss=0.0313 (251 batches, 14.1s)
+  val: pred_psnr=36.25dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 523: loss=0.0313 (251 batches, 14.2s)
+  val: pred_psnr=36.24dB pred_ssim=0.9298 bilinear_baseline_psnr=28.90dB
+epoch 524: loss=0.0313 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 525: loss=0.0314 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 526: loss=0.0312 (251 batches, 13.9s)
+  val: pred_psnr=36.26dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 527: loss=0.0311 (251 batches, 13.8s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 528: loss=0.0312 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 529: loss=0.0311 (251 batches, 14.1s)
+  val: pred_psnr=36.25dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 530: loss=0.0309 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 531: loss=0.0314 (251 batches, 14.0s)
+  val: pred_psnr=36.25dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 532: loss=0.0312 (251 batches, 14.0s)
+  val: pred_psnr=36.25dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 533: loss=0.0311 (251 batches, 13.9s)
+  val: pred_psnr=36.26dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 534: loss=0.0311 (251 batches, 13.8s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 535: loss=0.0312 (251 batches, 13.7s)
+  val: pred_psnr=36.25dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 536: loss=0.0312 (251 batches, 13.9s)
+  val: pred_psnr=36.25dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 537: loss=0.0314 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 538: loss=0.0312 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 539: loss=0.0312 (251 batches, 13.9s)
+  val: pred_psnr=36.26dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 540: loss=0.0313 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 541: loss=0.0312 (251 batches, 13.9s)
+  val: pred_psnr=36.25dB pred_ssim=0.9300 bilinear_baseline_psnr=28.90dB
+epoch 542: loss=0.0311 (251 batches, 13.9s)
+  val: pred_psnr=36.26dB pred_ssim=0.9299 bilinear_baseline_psnr=28.90dB
+epoch 543: loss=0.0312 (251 batches, 13.7s)
+  val: pred_psnr=36.27dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 544: loss=0.0311 (251 batches, 13.8s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 545: loss=0.0311 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 546: loss=0.0312 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 547: loss=0.0310 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 548: loss=0.0311 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 549: loss=0.0312 (251 batches, 14.2s)
+  val: pred_psnr=36.28dB pred_ssim=0.9304 bilinear_baseline_psnr=28.90dB
+epoch 550: loss=0.0313 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9304 bilinear_baseline_psnr=28.90dB
+epoch 551: loss=0.0311 (251 batches, 13.7s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 552: loss=0.0311 (251 batches, 13.7s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 553: loss=0.0309 (251 batches, 14.1s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 554: loss=0.0312 (251 batches, 14.1s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 555: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 556: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 557: loss=0.0309 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 558: loss=0.0312 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 559: loss=0.0309 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 560: loss=0.0309 (251 batches, 14.1s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 561: loss=0.0314 (251 batches, 14.1s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 562: loss=0.0310 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 563: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9304 bilinear_baseline_psnr=28.90dB
+epoch 564: loss=0.0309 (251 batches, 13.9s)
+  val: pred_psnr=36.27dB pred_ssim=0.9304 bilinear_baseline_psnr=28.90dB
+epoch 565: loss=0.0312 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9304 bilinear_baseline_psnr=28.90dB
+epoch 566: loss=0.0312 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 567: loss=0.0312 (251 batches, 13.9s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 568: loss=0.0311 (251 batches, 13.8s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 569: loss=0.0309 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 570: loss=0.0312 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9304 bilinear_baseline_psnr=28.90dB
+epoch 571: loss=0.0309 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 572: loss=0.0312 (251 batches, 14.2s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 573: loss=0.0310 (251 batches, 14.2s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 574: loss=0.0310 (251 batches, 14.1s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 575: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 576: loss=0.0310 (251 batches, 13.7s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 577: loss=0.0310 (251 batches, 13.8s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 578: loss=0.0311 (251 batches, 14.1s)
+  val: pred_psnr=36.27dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 579: loss=0.0312 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 580: loss=0.0315 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 581: loss=0.0309 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9303 bilinear_baseline_psnr=28.90dB
+epoch 582: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 583: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 584: loss=0.0313 (251 batches, 13.7s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 585: loss=0.0310 (251 batches, 13.7s)
+  val: pred_psnr=36.27dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 586: loss=0.0313 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 587: loss=0.0310 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 588: loss=0.0313 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9302 bilinear_baseline_psnr=28.90dB
+epoch 589: loss=0.0309 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 590: loss=0.0311 (251 batches, 13.9s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 591: loss=0.0311 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 592: loss=0.0314 (251 batches, 13.8s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 593: loss=0.0309 (251 batches, 13.7s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 594: loss=0.0309 (251 batches, 14.0s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 595: loss=0.0311 (251 batches, 14.2s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 596: loss=0.0311 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 597: loss=0.0310 (251 batches, 14.2s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 598: loss=0.0311 (251 batches, 14.1s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+epoch 599: loss=0.0312 (251 batches, 14.2s)
+  val: pred_psnr=36.26dB pred_ssim=0.9301 bilinear_baseline_psnr=28.90dB
+done. best val psnr: 36.28dB. checkpoints in D:\neuralisp\checkpoints\joint_isp_v3_longskew

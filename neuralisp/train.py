@@ -36,6 +36,10 @@ def parse_args() -> TrainConfig:
     p.add_argument("--patch-size", type=int, default=cfg.patch_size)
     p.add_argument("--patches-per-image", type=int, default=cfg.patches_per_image)
     p.add_argument("--lr", type=float, default=cfg.lr)
+    p.add_argument("--noise-skew-power", type=float, default=cfg.noise_skew_power,
+                    help="<1.0 biases training noise sampling toward the high-noise end of "
+                         "noise_gain_range (e.g. 0.5 ~doubles density in the top 1/6 of the range). "
+                         "1.0 = plain uniform (default, matches original behavior).")
     p.add_argument("--num-workers", type=int, default=cfg.num_workers)
     p.add_argument("--train-root", type=str, default=cfg.train_root)
     p.add_argument("--val-root", type=str, default=cfg.val_root)
@@ -52,6 +56,7 @@ def parse_args() -> TrainConfig:
     cfg.patch_size = args.patch_size
     cfg.patches_per_image = args.patches_per_image
     cfg.lr = args.lr
+    cfg.noise_skew_power = args.noise_skew_power
     cfg.num_workers = args.num_workers
     cfg.train_root = args.train_root
     cfg.val_root = args.val_root
@@ -142,12 +147,28 @@ def main():
         optimizer.load_state_dict(ckpt["optimizer"])
         start_epoch = ckpt["epoch"] + 1
         best_psnr = ckpt.get("best_psnr", best_psnr)
-        print(f"resumed from {cfg._resume} at epoch {start_epoch}")
+        if "scheduler" in ckpt:
+            scheduler.load_state_dict(ckpt["scheduler"])
+            # load_state_dict() restores the scheduler's internal counters but
+            # does NOT push the corresponding lr back into the optimizer's
+            # freshly-constructed param_groups -- confirmed by direct test,
+            # not just inferred. Must reapply explicitly.
+            for pg, lr in zip(optimizer.param_groups, scheduler.get_last_lr()):
+                pg["lr"] = lr
+        else:
+            # older checkpoint saved before scheduler state was tracked --
+            # fast-forward a fresh scheduler to approximate where the LR
+            # curve should be, rather than silently restarting it at epoch 0.
+            for _ in range(start_epoch):
+                scheduler.step()
+        print(f"resumed from {cfg._resume} at epoch {start_epoch}, "
+              f"lr={optimizer.param_groups[0]['lr']:.2e}")
 
     writer = SummaryWriter(log_dir=str(log_dir))
     global_step = start_epoch * len(train_loader)
 
     print(f"train patches: {len(train_ds)} | val images: {len(val_ds)} | device: {device}")
+    print(f"noise_gain_range: {cfg.noise_gain_range} | noise_skew_power: {cfg.noise_skew_power}")
 
     stop = False
     for epoch in range(start_epoch, cfg.epochs):
@@ -157,7 +178,7 @@ def main():
 
         for clean in train_loader:
             clean = clean.to(device, non_blocking=True)
-            out = degrade(clean, gain_range=cfg.noise_gain_range)
+            out = degrade(clean, gain_range=cfg.noise_gain_range, noise_skew_power=cfg.noise_skew_power)
             baseline = bilinear_demosaic(out.packed_bayer)
             pred = demosaic_denoise(model, out.packed_bayer, out.noise_map, baseline)
 
@@ -200,6 +221,7 @@ def main():
                 best_psnr = pred_psnr
                 torch.save(
                     {"model": model.state_dict(), "optimizer": optimizer.state_dict(),
+                     "scheduler": scheduler.state_dict(),
                      "epoch": epoch, "best_psnr": best_psnr, "cfg": cfg.__dict__},
                     ckpt_dir / "best.pt",
                 )
@@ -207,6 +229,7 @@ def main():
         if (epoch % cfg.save_every_epochs == 0) or stop:
             torch.save(
                 {"model": model.state_dict(), "optimizer": optimizer.state_dict(),
+                 "scheduler": scheduler.state_dict(),
                  "epoch": epoch, "best_psnr": best_psnr, "cfg": cfg.__dict__},
                 ckpt_dir / "latest.pt",
             )

@@ -19,6 +19,7 @@ class TrainConfig:
 
     # noise / degradation
     noise_gain_range: tuple[float, float] = (-4.0, -1.0)  # log10(shot_a) range
+    noise_skew_power: float = 1.0  # <1.0 biases sampling toward the high-noise end
 
     # optimization
     batch_size: int = 16
